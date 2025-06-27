@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VTDJV58GW6"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-VTDJV58GW6');
+        </script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <meta http-equiv="Cross-Origin-Resource-Policy" content="cross-origin"/>
+        <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+        <meta http-equiv="Content-Type" content="application/json" />
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+        <title>Exposición Virgen de Consolación del Castillo</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <!-- GLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/css/glightbox.min.css" rel="stylesheet" />
+        <!-- SimpleLightbox plugin CSS-->
+        <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" /> -->
+
+    </head>
+    <body id="page-top">
+
+
+        <!-- Back to top button -->
+        <button id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></button>
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-2">
+                <a class="navbar-brand col-8 text-wrap" href="#page-top">Exposición Virgen de Consolación del Castillo</a>
+                <button class="navbar-toggler navbar-toggler-right me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Piezas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Sobre la Virgen</a></li>
+                        <li class="nav-item"><a class="nav-link cart" href="" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg">Contacto<span></span><i class="ms-2 far fa-paper-plane"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead" id="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-8 align-self-end logo-main">
+                        <h1 class="text-white logo-main-text">Exposición Virgen de Consolación del Castillo</h1>
+                    
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Portfolio-->
+        <section class="page-section" id="portfolio">
+            <div class="container-fluid p-0" id="header-portfolio">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="mt-0">Piezas expuestas</h2>
+                    </div>
+                    <div class="wrap my-3">
+                        <p class="claim"></p>
+                    </div>
+
+                    <div class="alert alert-warning text-center mt-3" role="alert"><i class="fa-solid fa-person-digging"></i>
+                    Esta web está en proceso de construcción. Disculpen las molestias si algo falla en esta fase.
+                    </div>
+                    <!-- Filtro 1: Secciones-->
+                    <div id="filter-secciones" align="center" class="justify-content mb-3 mt-3 wrap">
+                        <button class="btn btn-default filter-button py-2 px-3 active" data-filter="all">Todas</button>
+                        <!-- Render filter after API fetch-->
+                    </div>
+                    <div id="search-field" align="center" class="px-0  mb-3">
+                      <input class="form-control deletable" id="myInput" type="text" placeholder="Buscar por identificador de sección...">
+                    </div>
+                    <!-- Filtro 2: Piezas-->
+                    <div id="filter-piezas" align="center" class="justify-content mb-3 mt-3 wrap">
+                        <button class="btn btn-default filter-button py-2 px-3 active" data-filter="all">Todas</button>
+                        <!-- Render filter after API fetch-->
+                    </div>
+                    <div id="search-field" align="center" class="px-0  mb-3">
+                      <input class="form-control deletable" id="myInput" type="text" placeholder="Buscar por identificador de pieza...">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container-fluid p-0">
+                <div class="row g-0 mb-0" id="loop">
+                <!-- Render products after API fetch-->
+
+
+                </div>
+            </div>
+         </section>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about"></section>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container-fluid p-0">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-12 text-center">
+                        <h2 class="mt-0">Contacto</h2>
+                        <p class="text-muted mb-5">¿Quiere información adicional de alguna pieza concreta o quiere colaborar aportantando más información? Por favor, escríbanos:</p>
+                        <!-- div class="row gx-4 gx-lg-5 justify-content-center">
+                                <div class="col-lg-4 text-center mb-5">
+                                    <div><i class="bi-envelope fs-2 text-muted"></i><a href="mailto:hola@virgendelcastillo.es">hola@virgendelcastillo.es</a></div>
+                                    <hr class="divider" />
+                                </div>
+                        </div -->
+                    </div>
+                </div>
+
+                <div class="container wrap">
+                    <div class="col-sm-12 text-center">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg">Contactar<i class="ms-2 far fa-paper-plane"></i></button>
+                    </div>
+                </div>
+
+                <div class="modal fade bd-contact-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="undefined">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Contacto <i class="ms-2 far fa-paper-plane"></i></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body justify-content">
+
+                            <div class="justify-content-center">
+                                    <form id="submit-to-google-sheet" name="submit-to-google-sheet">
+                                        <label for="name-sn-1">Nombre:</label>
+                                        <input class="form-control" type="text" id="name-sn-1" name="name" autocomplete="name" required><br>
+                                        <label for="email-sn">Email:</label>
+                                        <input class="form-control" type="email" id="email-sn" name="email" autocomplete="email" required><br>
+                                        <label for="phone-sn">Teléfono:</label>
+                                        <input class="form-control" type="tel" id="phone-sn" name="phone" autocomplete="tel"><br>
+                                        <label for="message-sn">Mensaje:</label>
+                                        <textarea class="form-control" cols="25" id="message-sn" name="message" required></textarea><br>
+                                        <fieldset class="cart-items"><legend id="tittle-cart-items">Productos que me interesan:</legend></fieldset>
+                                        <div class="form-check form-check-inline legal">
+                                            <label class="form-check-label legal" for="legal">He leído atentamente el <a class="legal">aviso legal</a> así como su política de privacidad y con el envío de mis datos personales, otorgo mi consentimiento para que sean tratados por Labores de Flores para la finalidad expuesta.</label>
+                                            <input class="form-check-input" type="checkbox" id="legal" name="legal" value="1" aria-invalid="false" required/>
+                                        </div>                   
+                                        <button id="submit-button-sn" class="btn w-100" type="submit" value="Send">Enviar</button>
+                                    </form>
+                                    <div class="alert alert-warning text-center" role="alert" id="sending-message" style="display: none;"><i class="fa fa-cog fa-spin fa-lg fa-fw" aria-hidden="undefined"></i>Por favor, espere, su mensaje está siendo enviado...</div>
+                                    <div class="alert alert-success text-center" role="alert" id="success-message" style="display: none;"><i class="fa fa-paper-plane fa-lg fa-fw" aria-hidden="undefined"></i>Su mensaje ha sido enviado. Pronto le contestaremos. ¡Gracias!</div>
+                                    <div class="alert alert-danger text-center" role="alert" id="error-message" style="display: none;"><i class="fa fa-exclamation-triangle fa-lg fa-fw" aria-hidden="undefined"></i>Ha habido un problema, por favor reinténtelo. Disculpe las molestias.</div>
+                            </div>
+
+                        </div>
+                          <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                <div class="container mt-5 p-0">
+                    <div class="col-lg-8 col-xl-12 text-center">
+                        <h2 class="mt-0">Otros enlaces de interés</h2>
+                        <div class="wrap">
+                            <p class="text-muted mb-3">Web de <strong>Montachez da una puntada con hilo</strong>, 75° Aniversario - Montánchez 2025</p>
+                            <a class="badge rounded-pill text-bg-warning" href="https://montanchezdapuntadaconhilo.es/" target="_blank"><i class="fa-solid me-2 fa-arrow-up-right-from-square"></i>montanchezdapuntadaconhilo.es</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-white py-4">
+            <div class="container-fluid p-0">
+                <div class="small text-center text-muted">Copyright &copy; 2025 - Virgen de Consolación del Castillo - <span>Todos los derechos reservados</span></div>
+                    <img class="cruz aos-init aos-animate" src="assets/img/cruz.svg" alt="" data-aos="fade-in">
+                    <div class="viva-cristo-rey small text-center text-muted">In Hoc Signo Vinces</div>
+            </div>
+            <div class="container-fluid p-0">
+                <div class="col-sm-12 text-center">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn footer" data-bs-toggle="modal" data-bs-target=".bd-legal-modal-lg">Aviso legal</button>
+                </div>
+            </div>
+            <div class="modal fade bd-legal-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="undefined">
+              <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Aviso legal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body footer justify-content">
+                    <p>En cumplimiento con el deber de información recogido en artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, a continuación se reflejan los siguientes datos: La empresa titular de la web (en adelante, LA EMPRESA) pone a su disposición la siguiente información:</p>
+                    <p>Identificación: expovirgendelcastillo.es</p>
+                    <!--p>CIF: </p-->
+                    <!--p>Dirección: </p-->
+                    <!--p>Teléfono: </p-->
+                    <!--p>Email: </p-->
+                    <!--p>Datos de registro:</p-->
+                    <p>La utilización de la web le atribuye la condición de usuario de la web (en adelante, el “Usuario”) e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal en la versión publicada por LA EMPRESA en el momento mismo en que el Usuario acceda a la Web. LA EMPRESA se reserva el derecho a modificar unilateralmente, en cualquier momento y sin previo aviso, la presentación y configuración de los contenidos y los servicios de la Web, así como las condiciones requeridas para su utilización cuando ello sea conveniente para su mejor prestación.</p>
+                    <p>El contenido de la presente web está protegido por las leyes de propiedad intelectual.</p>
+                    <p>Dichos contenidos deberán ser usados de forma correcta y licita por el usuario y, en particular queda obligado a utilizar dichos contenidos de forma diligente, correcta y lícita.</p>
+                    <p>No podrán usarse los contenidos de forma contraria a la ley, a la moral o a las buenas costumbres aceptadas en orden público.</p>
+                    <p>Está prohibida la transmisión de cualquier tipo de datos que usted pueda realizar a esta web, o a otros pertenecientes a terceras empresas cuyos links podrá encontrar dentro de esta web, que atente contra los derechos de propiedad de terceros de carácter amenazador o material que pueda ser considerado delito o falta en virtud del vigente Código Penal.</p>
+                    <p>Queda prohibida la reproducción, copia, distribución, transformación o modificación de contenidos (textos, imágenes, voces o estructura) a menos que se cuente con la autorización expresa y por escrito del titular de los derechos adquiridos.</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </footer>
+
+        <!-- JQuery plugin JS-->
+        <!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+        <!-- GLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/js/glightbox.min.js"></script>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script> -->
+
+        <!-- Sync via API data from spreadsheet-->
+        <script src="js/fetch-api.js"></script>
+        <!-- Core JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/search.js"></script>
+        <script src="js/contact.js"></script>
+
+    </body>
+</html>
