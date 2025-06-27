@@ -622,20 +622,23 @@ $(document).ready(function() {
     const param1Value = urlParams.get('param1');
     // const param2Value = urlParams.get('param2');
     
-    // Now you can use these values as needed
-    $('[data-filter="'+param1Value+'"]').click();
-    document.getElementById("filter-piezas").scrollIntoView( {behavior: "smooth"});
-    console.log('param1Value:', param1Value);
-        $(".navbar-nav").hide();
-        $("#filter-piezas").hide();
-        $("#masthead").hide();
-        $("#header-portfolio").hide();
-        $("#about").hide();
-        $("#contact").hide();
-        $("#portfolio").addClass("mt-6");
-        document.getElementById("loop").scrollIntoView( {behavior: "smooth" });
-        $("#mainNav").addClass("dark");
-        $(".add").hide();
+    console.log(urlParams.has('param1')); // true
+
+    if (urlParams.has('param1')) {
+        $('[data-filter="'+param1Value+'"]').click();
+        document.getElementById("filter-piezas").scrollIntoView( {behavior: "smooth"});
+        console.log('param1Value:', param1Value);
+            $(".navbar-nav").hide();
+            $("#filter-piezas").hide();
+            $("#masthead").hide();
+            $("#header-portfolio").hide();
+            $("#about").hide();
+            $("#contact").hide();
+            $("#portfolio").addClass("mt-6");
+            document.getElementById("loop").scrollIntoView( {behavior: "smooth" });
+            $("#mainNav").addClass("dark");
+            $(".add").hide();
+    };
     
     
     var restore = $('<div class="container-fluid mt-0 px-0 restoreDiv"><div class="row justify-content-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
