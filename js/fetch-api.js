@@ -11,8 +11,8 @@ const myList = document.getElementById("loop");
 
 myList.innerHTML = loader;
 
-const myFilter = document.getElementById("filter-piezas");
-const myFilter2 = document.getElementById("filter-secciones");
+//const myFilter2 = document.getElementById("filter-piezas");
+const myFilter = document.getElementById("filter-secciones");
 
 const myRequest = new Request("https://sheets.googleapis.com/v4/spreadsheets/"+gSheetsFile+"/values/"+sheet+"?alt=json&key="+apiKey);
 
@@ -77,37 +77,36 @@ fetch(myRequest)
         }
 
 
-        // Conseguir el valor de todas las piezas únicas
-        let arr = [];
-
-        for(let i = 0; i < result.length; i++){
-        let rowInfo = result[i];
-        let resultsPiezas = rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase();
-            if (resultsPiezas !== "" && resultsPiezas !== "virgen" && resultsPiezas !== "portada") {
-                arr.push(resultsPiezas);
-            }
-        }
-        //console.log(arr);
-        function onlyUnique(value, index, array) {
-            return array.indexOf(value) === index;
-        }
-        var unique = arr.filter(onlyUnique);
-        console.log(unique);
-
-
         // Conseguir el valor de todas las secciones / espacios
-        let arr2 = [];
+        let arr = [];
         for(let i = 0; i < result.length; i++){
         let rowInfo = result[i];
         let resultsSecciones = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();
             if (resultsSecciones !== "") {
-                arr2.push(resultsSecciones);
+                arr.push(resultsSecciones);
             }
         }
         //console.log(arr);
-        var unique2 = arr2.filter(onlyUnique);
-        console.log(unique2);
+        var unique = arr.filter(onlyUnique);
+        console.log(unique);
 
+
+        // Conseguir el valor de todas las piezas únicas
+        //let arr2 = [];
+
+        //for(let i = 0; i < result.length; i++){
+        //let rowInfo = result[i];
+        //let resultsPiezas = rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase();
+        //    if (resultsPiezas !== "" && resultsPiezas !== "virgen" && resultsPiezas !== "portada") {
+        //        arr2.push(resultsPiezas);
+        //    }
+        //}
+        //console.log(arr2);
+        //function onlyUnique(value, index, array) {
+        //    return array.indexOf(value) === index;
+        //}
+        //var unique2 = arr2.filter(onlyUnique);
+        //console.log(unique2);
 
 
         // Renderizado de todas las piezas en el div loop
@@ -466,26 +465,26 @@ fetch(myRequest)
 }
 
 // Renderizado de los botones de filtro de piezas
-    for(let i = 0; i < unique.length; i++){
-        let rowInfo = unique[i]            
-        //console.log(rowInfo);
-        const newDiv = document.createElement("button");
-        newDiv.className = "btn btn-default filter-button py-2 px-3";
-
-        var idPieza2 = rowInfo.replace(re, m => chars[m]).toLowerCase();
-        if (idPieza2 !== "") {newDiv.dataset.filter = idPieza2};
-        newDiv.innerHTML = rowInfo.replace("-", " ");
-        myFilter.appendChild(newDiv);
-    }
-    const newButton = document.createElement("button");
-    newButton.className = "btn btn-default py-2 px-3 search";
-    newButton.innerHTML = '<i class="fa fa-search" aria-hidden="true"></i>';
-    myFilter.appendChild(newButton);
+//    for(let i = 0; i < unique2.length; i++){
+//        let rowInfo = unique2[i]            
+//        //console.log(rowInfo);
+//        const newDiv = document.createElement("button");
+//        newDiv.className = "btn btn-default filter-button py-2 px-3";
+//
+//        var idPieza2 = rowInfo.replace(re, m => chars[m]).toLowerCase();
+//        if (idPieza2 !== "") {newDiv.dataset.filter = idPieza2};
+//        newDiv.innerHTML = rowInfo.replace("-", " ");
+//        myFilter2.appendChild(newDiv);
+//    }
+//    const newButton2 = document.createElement("button");
+//    newButton2.className = "btn btn-default py-2 px-3 search";
+//    newButton2.innerHTML = '<i class="fa fa-search" aria-hidden="true"></i>';
+//    myFilter2.appendChild(newButton2);
 
 
 // Renderizado de los botones de secciones
-    for(let i = 0; i < unique2.length; i++){
-        let rowInfo = unique2[i]            
+    for(let i = 0; i < unique.length; i++){
+        let rowInfo = unique[i]            
         //console.log(rowInfo);
         const newDiv = document.createElement("button");
         newDiv.className = "btn btn-default filter-button py-2 px-3";
@@ -493,12 +492,12 @@ fetch(myRequest)
         var idSeccion = rowInfo.replace(re, m => chars[m]).toLowerCase();
         if (idSeccion !== "") {newDiv.dataset.filter = idSeccion};
         newDiv.innerHTML = rowInfo.replace("-", " ");
-        myFilter2.appendChild(newDiv);
+        myFilter.appendChild(newDiv);
     }
-    const newButton2 = document.createElement("button");
-    newButton2.className = "btn btn-default py-2 px-3 search";
-    newButton2.innerHTML = '<i class="fa fa-search" aria-hidden="true"></i>';
-    myFilter2.appendChild(newButton2);
+    const newButton = document.createElement("button");
+    newButton.className = "btn btn-default py-2 px-3 search";
+    newButton.innerHTML = '<i class="fa fa-search" aria-hidden="true"></i>';
+    myFilter.appendChild(newButton);
 
 
     // Activate GLightbox plugin for portfolio items
@@ -621,15 +620,18 @@ $(document).ready(function() {
     // Get the value of a specific parameter
     const param1Value = urlParams.get('param1');
     // const param2Value = urlParams.get('param2');
-    
+
     console.log(urlParams.has('param1')); // true
 
     if (urlParams.has('param1')) {
-        $('[data-filter="'+param1Value+'"]').click();
-        document.getElementById("filter-piezas").scrollIntoView( {behavior: "smooth"});
+        // Now you can use these values as needed
+        $('.filter').hide();
+        $('.filter.'+param1Value).show('1000');
+        //$('[data-filter="'+param1Value+'"]').click();
+        document.getElementById("filter-secciones").scrollIntoView( {behavior: "smooth"});
         console.log('param1Value:', param1Value);
             $(".navbar-nav").hide();
-            $("#filter-piezas").hide();
+            //$("#filter-piezas").hide();
             $("#masthead").hide();
             $("#header-portfolio").hide();
             $("#about").hide();
@@ -640,15 +642,15 @@ $(document).ready(function() {
             $(".add").hide();
     };
     
-    
-    var restore = $('<div class="container-fluid mt-0 px-0 restoreDiv"><div class="row justify-content-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+    var restore = $('<div class="container-fluid mt-0 px-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
     $("#portfolio").append(restore);
 
     // console.log('param2Value:', param2Value);
     
     $(".backToMain").click(function () {
+        $('.filter').show();
         $(".navbar-nav").show();
-        $("#filter-piezas").hide();
+        //$("#filter-piezas").hide();
         $("#masthead").show();
         $("#header-portfolio").show();
         $("#about").show();
@@ -657,7 +659,7 @@ $(document).ready(function() {
         document.getElementById("masthead").scrollIntoView( {behavior: "smooth" });
         $("#mainNav").removeClass("dark");
         $(".restoreDiv").remove();
-        $(".filter-button").filter('[data-filter="all"]').click();
+        //$(".filter-button").filter('[data-filter="all"]').click();
         $(".mediaButton .btn.active").click();
         $(".add").show();
         
