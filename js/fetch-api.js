@@ -640,10 +640,9 @@ $(document).ready(function() {
             document.getElementById("loop").scrollIntoView( {behavior: "smooth" });
             $("#mainNav").addClass("dark");
             $(".add").hide();
+            var restore = $('<div class="container-fluid mt-0 px-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+            $("#portfolio").append(restore);
     };
-    
-    var restore = $('<div class="container-fluid mt-0 px-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
-    $("#portfolio").append(restore);
 
     // console.log('param2Value:', param2Value);
     
