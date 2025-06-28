@@ -139,7 +139,7 @@ fetch(myRequest)
                                             <p class="opacity-75 wrap text-75 mb-4 px-2">${rowInfo.descripcion}</p>
                                         </div>
                                         <div class="col-sm-12 col-md-6 text-center">
-                                            <div class="px-3 px-sm-0 shadow"><img class="img-fluid rounded-4" src="${rowInfo.imgDefecto}" alt="virgen del castillo"></div>
+                                            <div class="shadow"><img class="img-fluid rounded-4" src="${rowInfo.imgDefecto}" alt="virgen del castillo"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +278,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="img-fluid img-thumbnail object-fit-fill" id="video" title="${rowVariant.name}"
+                        <iframe class="video-thumbnail img-fluid object-fit-fill rounded-3" id="video" title="${rowVariant.name}"
                         src="${rowVariant.url}">
                         </iframe>
                         `;
@@ -330,7 +330,7 @@ fetch(myRequest)
                         newAudio.innerHTML = `
                         <span class="badge rounded-pill text-bg-danger">Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="img-fluid audio-thumbnail img-thumbnail object-fit-fill h-auto" id="audio" title="${rowVariant.name}"
+                        <iframe class="rounded-pill audio-thumbnail" id="audio" title="${rowVariant.name}"
                         src="${rowVariant.url}">
                         </iframe>
                         `;
@@ -419,12 +419,12 @@ fetch(myRequest)
                         if (appVariant == appType) {
                             //console.log(appVariant+">>BINGO>>>"+appType);
                             var newAppDoc = document.createElement('div');
-                            newAppDoc.className = "col";
+                            newAppDoc.className = "col h_iframe";
                             newAppDoc.innerHTML = `
                             <span class="badge rounded-pill text-bg-warning">Archivo</span>
                             <span class="badge rounded-pill text-bg-${color}">${appVariantName}</span>
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                            <iframe class="img-fluid file-thumbnail img-thumbnail object-fit-fill" id="archivos" title="${rowVariant.name}"
+                            <iframe class="img-fluid ratio ratio-4x3 file-thumbnail img-thumbnail object-fit-fill" id="archivos" title="${rowVariant.name}"
                             src="${rowVariant.url}">
                             </iframe>
                             `;
@@ -500,16 +500,6 @@ fetch(myRequest)
     myFilter.appendChild(newButton);
 
 
-    // Activate GLightbox plugin for portfolio items
-    // In DOM can be added the file type as data attribute: data-type="image"
-    
-          var lightbox = GLightbox({
-                selector: '.portfolio-box',
-                type: 'image',
-                descPosition: 'bottom'
-          });
-
-    
 
     $(".form-control").focus(function(){
       $(".form-check.legal").show('3000'); 
@@ -520,6 +510,21 @@ fetch(myRequest)
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
+
+// Activate GLightbox plugin for portfolio items
+// In DOM can be added the file type as data attribute: data-type="image"
+$(document).ready(function(){
+
+        var lightbox = GLightbox({
+            selector: '.portfolio-box',
+            type: 'image',
+            descPosition: 'bottom'
+        });
+
+        var lightbox2 = GLightbox({
+            selector: '.video-thumbnail'
+        });
+});
 
 $(document).ready(function(){
 
@@ -640,7 +645,7 @@ $(document).ready(function() {
             document.getElementById("loop").scrollIntoView( {behavior: "smooth" });
             $("#mainNav").addClass("dark");
             $(".add").hide();
-            var restore = $('<div class="container-fluid mt-0 px-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+            var restore = $('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
             $("#portfolio").append(restore);
     };
 
