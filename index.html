@@ -100,7 +100,7 @@
             </div>
          </section>
         <!-- About-->
-        <section class="page-section bg-primary" id="about"></section>
+        <section class="page-section" id="about"></section>
         <!-- Contact-->
         <section class="page-section" id="contact">
             <div class="container px-2">
@@ -143,7 +143,7 @@
                                         <input class="form-control" type="tel" id="phone-sn" name="phone" autocomplete="tel"><br>
                                         <label for="message-sn">Mensaje:</label>
                                         <textarea class="form-control" cols="25" id="message-sn" name="message" required></textarea><br>
-                                        <fieldset class="cart-items"><legend id="tittle-cart-items">Productos que me interesan:</legend></fieldset>
+                                        <fieldset class="cart-items"><legend id="tittle-cart-items">Piezas que me interesan:</legend></fieldset>
                                         <div class="form-check form-check-inline legal">
                                             <label class="form-check-label legal" for="legal">He leído atentamente el <a class="legal">aviso legal</a> así como su política de privacidad y con el envío de mis datos personales, otorgo mi consentimiento para que sean tratados por Labores de Flores para la finalidad expuesta.</label>
                                             <input class="form-check-input" type="checkbox" id="legal" name="legal" value="1" aria-invalid="false" required/>
@@ -187,6 +187,36 @@
                 <button type="button" class="btn footer" data-bs-toggle="modal" data-bs-target=".bd-legal-modal-lg">Aviso legal</button>
                 </div>
             </div>
+
+            <button type="button" class="btn journey-button" data-bs-toggle="modal" data-bs-target=".bd-journey"><i class="fa-solid fa-route me-2"></i></i>Ver tu itinerario</button>
+
+            <div class="modal fade bd-journey" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="undefined">
+              <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tu itinerario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body footer justify-content">
+                        <div class="container py-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                <div id="content">
+                                    <ul class="timeline-1 text-black">
+                                    
+                                    </ul>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+
             <div class="modal fade bd-legal-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="undefined">
               <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -228,6 +258,11 @@
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- SimpleLightbox plugin JS-->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script> -->
+        <!-- JQuery Cookie plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        
+
+        
 
         <!-- Sync via API data from spreadsheet-->
         <script src="js/fetch-api.js"></script>
