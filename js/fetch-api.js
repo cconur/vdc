@@ -728,6 +728,8 @@ $(document).ready(function() {
 
             // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h, en este caso 12:
             $.cookie("count", 1, { expires: 0.5  });
+            $.cookie("events", 0, { expires: 0.5  });
+            var events_value = $.cookie('events');
 
             var count = $.cookie("count");
 
@@ -740,7 +742,10 @@ $(document).ready(function() {
  
             var newEvent = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
             $(".bd-journey .modal-body .timeline-1").append(newEvent);
+            events_value = newEvent;
             count = count + 1;
+            console.log(count);
+            console.log(events_value);
 
     };
 
