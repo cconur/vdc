@@ -172,6 +172,7 @@ fetch(myRequest)
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.seccion}</li>
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.espacio}</li>
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.soporte}</li>
+                                            <li class="breadcrumb-item active" aria-current="page">${rowInfo.nPieza}</li>
                                         </ol>
                                     </nav>  
                                     <p class="mb-4">${rowInfo.descripcion.replaceAll("•", "\n")}</p>
@@ -212,6 +213,8 @@ fetch(myRequest)
             var variants = CsvToArr(csv, ',');
 
         var otherVariants = document.createElement('div');
+        var indicators = document.createElement('div');
+
             //para el recuento de archivos media
             var apptypes = [];
 
@@ -220,20 +223,28 @@ fetch(myRequest)
                         let rowVariant = variants[j];
                         //console.log(rowVariant);
                         //console.log(variants.length);
-                        newImage.className = "col-lg-4 col-sm-6";
+                        newImage.className = "carousel-item";
                         newImage.classList.add("moreimages");                     
                         newImage.innerHTML = `
-                        <span class="badge rounded-pill text-bg-danger">Imagen</span>
-                        <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <a class="portfolio-box" href="${rowVariant.url}" title="${rowVariant.name}">
-                            <img class="img-fluid img-thumbnail object-fit-fill" src="${rowVariant.url}" alt="labores de flores" />
+                        <a class="portfolio-box ratio ratio-16x9" href="${rowVariant.url}" title="${rowVariant.name}">
+                            <img class="img-fluid img-thumbnail object-fit-fill d-block w-100" src="${rowVariant.url}" alt="" />
                         </a>
+                        <div class="carousel-caption d-none d-md-block">
+                            <span class="badge rounded-pill text-bg-danger">Imagen</span>
+                            <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
+                        </div>
                         `;
+                        var newIndicator = document.createElement('button');
+                        newIndicator.setAttribute("data-bs-target", "#carouselImages."+idPieza);
+                        newIndicator.setAttribute("data-bs-slide-to",j);
+                        newIndicator.setAttribute("aria-current","true");
+                        newIndicator.setAttribute("aria-label","Slide "+(j+1));
                         //console.log(newImage);
 
             //recuento de archivos media           
             apptypes.push(rowVariant);
 
+            indicators.appendChild(newIndicator);
             otherVariants.appendChild(newImage);           
             };
             
@@ -254,8 +265,23 @@ fetch(myRequest)
                             <i class="fa-solid fa-image me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="fa-solid fa-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
                             </button>
                         </div>
-                        <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
-                            ${otherVariants.innerHTML}
+                        <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
+                        <div id="carouselImages" class="carousel slide ${idPieza}">
+                            <div class="carousel-indicators">
+                            ${indicators.innerHTML}
+                            </div>
+                            <div class="carousel-inner">
+                                ${otherVariants.innerHTML}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages.${idPieza}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselImages.${idPieza}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                         </div>
                         `;
         }
@@ -278,7 +304,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="video-thumbnail img-fluid object-fit-fill rounded-3" id="video" title="${rowVariant.name}"
+                        <iframe class="video-thumbnail ratio ratio-16x9 img-fluid object-fit-fill rounded-3" id="video" title="${rowVariant.name}"
                         src="${rowVariant.url}">
                         </iframe>
                         `;
@@ -424,7 +450,7 @@ fetch(myRequest)
                             <span class="badge rounded-pill text-bg-warning">Archivo</span>
                             <span class="badge rounded-pill text-bg-${color}">${appVariantName}</span>
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                            <iframe class="img-fluid ratio ratio-4x3 file-thumbnail img-thumbnail object-fit-fill" id="archivos" title="${rowVariant.name}"
+                            <iframe class="img-fluid ratio ratio-1x1 file-thumbnail img-thumbnail object-fit-fill" id="archivos" title="${rowVariant.name}"
                             src="${rowVariant.url}">
                             </iframe>
                             `;
@@ -524,7 +550,53 @@ $(document).ready(function(){
         var lightbox2 = GLightbox({
             selector: '.video-thumbnail'
         });
+        const carousel = new bootstrap.Carousel('#carouselImages');
+
+        $( ".carousel-inner" ).each( function () {
+            $(this).children().first().toggleClass("active");
+        });
+
+        $( ".carousel-indicators" ).each( function () {
+            $(this).children().first().toggleClass("active");
+        });
+
 });
+
+$(document).ready(function(){
+    $(".add").click(function(){
+        var idPieza = $(this).parent().find("h1").text();
+        var nameidPieza = idPieza.replace(re, m => chars[m]).toLowerCase();
+        var target = document.getElementById("tittle-cart-items");
+        var newField = document.createElement("div");
+        newField.className = "form-check form-check-inline";
+        newField.classList.add(nameidPieza);
+
+        if ($('.form-check.'+nameidPieza).length === 0) {
+
+            $(this).addClass("active");
+            newField.innerHTML = `
+                        <input class="form-check-input" type="checkbox" id="piezas-${nameidPieza}" name="piezas" value="${nameidPieza}" checked />
+                        <label class="form-check-label" for="piezas-${nameidPieza}">${idPieza}</label>
+        `;;
+            target.after(newField);
+            $('.cart-items').show('1000');
+            var numItems = $('.cart-items .form-check').length;
+            $(".cart span").text(numItems);
+            $(".cart span").show();
+            $(this).attr("data-bs-original-title", "Pieza añadido");
+            // document.getElementById("tittle-cart-items").scrollIntoView( {behavior: "smooth" });
+        }
+
+        else if ($('.form-check.'+nameidPieza).length > 0) {
+            alert("Ya has añadido la pieza: "+nameidPieza);
+            $(this).tooltip('dispose');
+            $(this).tooltip('hide');
+        }
+
+
+        });
+});
+
 
 $(document).ready(function(){
 
@@ -645,8 +717,31 @@ $(document).ready(function() {
             document.getElementById("loop").scrollIntoView( {behavior: "smooth" });
             $("#mainNav").addClass("dark");
             $(".add").hide();
+
+            var seccion = param1Value.split('-')[1];
+            console.log(seccion);
+
+            if(seccion == "s08") {
             var restore = $('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
             $("#portfolio").append(restore);
+            };
+
+            // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h, en este caso 12:
+            $.cookie("count", 1, { expires: 0.5  });
+
+            var count = $.cookie("count");
+
+            const d = new Date();
+            
+            const event = new Date();
+            let time = event.toLocaleString();
+            
+            console.log(time);
+ 
+            var newEvent = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            $(".bd-journey .modal-body .timeline-1").append(newEvent);
+            count = count + 1;
+
     };
 
     // console.log('param2Value:', param2Value);
