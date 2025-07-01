@@ -1,5 +1,5 @@
 
-var scriptURL = 'https://script.google.com/macros/s/AKfycbzzhdRUx5PfYxRFOwwidcEUksCSTVkBGrTGB0Gq2mRp4zK5hzoP7Qk5TUAlfKOyX2oh/exec';
+var scriptURL = 'https://script.google.com/macros/s/AKfycbw0nE7FOlb7R-Y0AmIfQ7VtDI-8d5x1BnJyaulHzaEiF_AY-P8aFqhZUNC0Zr7lXKSxAw/exec';
 var form = document.forms['submit-to-google-sheet'];
 
 var successMessage = document.getElementById('success-message');
@@ -22,13 +22,13 @@ form.addEventListener('submit', e => {
   var email = data.get("email");
   var phone = data.get("phone");
   var message = data.get("message");
-  var products = data.getAll("productos");
-  var nOfProd = products.length;
-  console.log(products);
-  console.log(nOfProd);
-  if (nOfProd == 0) {
-    var  products = ["No hay productos seleccionados"];
-    console.log(products);
+  var piezas = data.getAll("piezas");
+  var nOfPiezas = piezas.length;
+  console.log(piezas);
+  console.log(nOfPiezas);
+  if (nOfPiezas == 0) {
+    var  piezas = ["No hay piezas seleccionadas"];
+    console.log(piezas);
   }
 
   fetch(scriptURL, {method: 'POST', body: data})
