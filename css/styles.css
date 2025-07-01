@@ -11505,7 +11505,7 @@ span.deleteicon input {
   font-weight:100;
   font-size:1.0em;
 }
- 
+ #submit-to-google-sheet .cart-items,
  #submit-to-google-sheet .form-control { 
   width: 100%;
   padding: 10px;
@@ -11639,8 +11639,6 @@ hr.solid {
 }
 
 .img-thumbnail {
-  width: 100%!important;
-  height: 260px!important;
   object-fit: cover!important;
 }
 
@@ -11780,4 +11778,99 @@ html.glightbox-open {
   transition: 0.5s;
   padding:20px;
   text-align:center;
+}
+
+
+.journey-button {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    height: 50px;
+    display: block !important;
+    z-index: 99999;
+}
+
+.timeline-1 {
+  border-left: 3px solid #4b7beb;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  background: rgb(99 118 177 / 9%);
+  margin: 0 auto;
+  position: relative;
+  padding: 50px;
+  list-style: none;
+  text-align: left;
+  max-width: 40%;
+}
+
+@media (max-width: 767px) {
+  .timeline-1 {
+    max-width: 98%;
+    padding: 25px;
+  }
+}
+
+.timeline-1 .event {
+  border-bottom: 1px dashed #4b7beb;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .timeline-1 .event {
+    padding-top: 30px;
+  }
+}
+
+.timeline-1 .event:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+.timeline-1 .event:before,
+.timeline-1 .event:after {
+  position: absolute;
+  display: block;
+  top: 0;
+}
+
+.timeline-1 .event:before {
+  left: -207px;
+  content: attr(data-date);
+  text-align: right;
+  font-weight: 100;
+  font-size: 0.9em;
+  min-width: 120px;
+}
+
+@media (max-width: 767px) {
+  .timeline-1 .event:before {
+    left: 0px;
+    text-align: left;
+  }
+}
+
+.timeline-1 .event:after {
+  -webkit-box-shadow: 0 0 0 3px #4b7beb;
+  box-shadow: 0 0 0 3px #4b7beb;
+  left: -55.8px;
+  background: #fff;
+  border-radius: 50%;
+  height: 9px;
+  width: 9px;
+  content: "";
+  top: 5px;
+}
+
+@media (max-width: 767px) {
+  .timeline-1 .event:after {
+    left: -31.8px;
+  }
+}
+
+
+#carouselImages .carousel-caption{
+  
 }
