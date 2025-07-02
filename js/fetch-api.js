@@ -537,9 +537,10 @@ fetch(myRequest)
       $('[data-toggle="tooltip"]').tooltip()
     })
 
+
+$(document).ready(function(){
 // Activate GLightbox plugin for portfolio items
 // In DOM can be added the file type as data attribute: data-type="image"
-$(document).ready(function(){
 
         var lightbox = GLightbox({
             selector: '.portfolio-box',
@@ -550,12 +551,12 @@ $(document).ready(function(){
         var lightbox2 = GLightbox({
             selector: '.video-thumbnail'
         });
-        const carousel = new bootstrap.Carousel('#carouselImages');
 
+// Inicializo el carrusel de Bootstrap
+        const carousel = new bootstrap.Carousel('#carouselImages');
         $( ".carousel-inner" ).each( function () {
             $(this).children().first().toggleClass("active");
         });
-
         $( ".carousel-indicators" ).each( function () {
             $(this).children().first().toggleClass("active");
         });
@@ -689,7 +690,6 @@ $(document).ready(function(){
 
 
 $(document).ready(function() {
-
     // Asumeiendo una URL con esta estructura: http://url.com/?param1=value1&param2=value2 -->
     // Get the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -722,33 +722,39 @@ $(document).ready(function() {
             console.log(seccion);
 
             if(seccion == "s08") {
-            var restore = $('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
-            $("#portfolio").append(restore);
+                var restore = $('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+                $("#portfolio").append(restore);
             };
 
-            // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h, en este caso 12:
-            $.cookie("count", 1, { expires: 0.5  });
-            $.cookie("events", "events_value", { expires: 0.5  });
-            var events_value = $.cookie('events');
-
-            var count = $.cookie("count");
-
-            const d = new Date();
-            
             const event = new Date();
             let time = event.toLocaleString();
-            
             console.log(time);
-            if ($.cookie("count") == 1) {events_value == ""};
- 
-            var newEvent = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
-            events_value = events_value + newEvent;
-            
-            $(".bd-journey .modal-body .timeline-1").html(events_value);
 
-            count = (count + 1);
-            console.log(count);
-            console.log(events_value);
+            // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h, en este caso 12:
+            
+            if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
+            const countValue = 1;
+            $.cookie('events', eventsValue, { expires: 0.5 });
+            $.cookie('count', countValue, { expires: 0.5 });
+            var count = $.cookie('count');
+            var eventsValue = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+            }
+
+            else {
+            var count = $.cookie('count');
+            var eventsValue = $.cookie('events') + $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            }
+            
+            $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+
+            $.cookie('events', eventsValue);
+            count == (count + 1);
+            $.cookie('count', count);
+
+            console.log($.cookie('count'));
+            console.log($.cookie('events'));
+            
 
     };
 
