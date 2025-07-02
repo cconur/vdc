@@ -720,12 +720,14 @@ $(document).ready(function() {
 
             var seccion = param1Value.split('-')[1];
             console.log(seccion);
+            $.removeCookie('count');
+            $.removeCookie('events');
 
             console.log($.cookie('count'));
             console.log($.cookie('events'));
 
             if(seccion == "s08") {
-                var restore = $('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+                var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
                 $("#portfolio").append(restore);
             };
 
@@ -740,20 +742,23 @@ $(document).ready(function() {
             $.cookie('events', '', { expires: 0.5 });
             $.cookie('count', countValue, { expires: 0.5 });
             let count = $.cookie('count');
-            let eventsValue = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+            console.log(eventsValue);
             $.cookie('events', eventsValue);
-            count = count + 1;
+            count = parseFloat(count) + 1;
             $.cookie('count', count);
             }
 
             else {
             let count = $.cookie('count');
-            let eventsValue = $.cookie('events') + $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             $.cookie('events', eventsValue);
-            count = count + 1;
+            count = parseFloat(count) + 1;
             $.cookie('count', count);
+            console.log(eventsValue);
             }
             
             console.log($.cookie('count'));
