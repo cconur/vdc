@@ -733,23 +733,24 @@ $(document).ready(function() {
             // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h, en este caso 12:
             
             if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
-            const countValue = 1;
-            $.cookie('events', eventsValue, { expires: 0.5 });
+            let countValue = 1;
+            $.cookie('events', '', { expires: 0.5 });
             $.cookie('count', countValue, { expires: 0.5 });
-            var count = $.cookie('count');
-            var eventsValue = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            let count = $.cookie('count');
+            let eventsValue = $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+            $.cookie('events', eventsValue);
             }
 
             else {
-            var count = $.cookie('count');
-            var eventsValue = $.cookie('events') + $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            let count = $.cookie('count');
+            let eventsValue = $.cookie('events') + $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
             }
             
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
             $.cookie('events', eventsValue);
-            count == (count + 1);
+            count = count + 1;
             $.cookie('count', count);
 
             console.log($.cookie('count'));
