@@ -720,8 +720,8 @@ $(document).ready(function() {
 
             var seccion = param1Value.split('-')[1];
             console.log(seccion);
-            $.removeCookie('count');
-            $.removeCookie('events');
+            //$.removeCookie('count');
+            //$.removeCookie('events');
 
             console.log($.cookie('count'));
             console.log($.cookie('events'));
