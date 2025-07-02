@@ -701,7 +701,8 @@ $(document).ready(function() {
     console.log(urlParams.has('param1')); // true
 
     if (urlParams.has('param1')) {
-        // Now you can use these values as needed
+        // eventos si hay parámetro
+        $('.journey-button').show('1000');
         $('.filter').hide();
         $('.filter.'+param1Value).show('1000');
         //$('[data-filter="'+param1Value+'"]').click();
@@ -765,7 +766,10 @@ $(document).ready(function() {
             console.log($.cookie('events'));
             
 
-    };
+    } 
+    else {
+          $('.journey-button').hide();
+         };
 
     // console.log('param2Value:', param2Value);
     
