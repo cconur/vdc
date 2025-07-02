@@ -745,10 +745,9 @@ $(document).ready(function() {
             else {
             let count = $.cookie('count');
             let eventsValue = $.cookie('events') + $('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             }
             
-            $(".bd-journey .modal-body .timeline-1").html(eventsValue);
-
             $.cookie('events', eventsValue);
             count = count + 1;
             $.cookie('count', count);
