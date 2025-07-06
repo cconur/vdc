@@ -11906,6 +11906,8 @@ html.glightbox-open {
 }
 
 #goog-gt-tt,
+#goog-gt-tt + div,
+#goog-gt-tt + div + iframe,
 #page-top .skiptranslate {
   display:none!important;
 }
