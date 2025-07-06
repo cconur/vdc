@@ -29,16 +29,23 @@
         <link href="css/styles.css" rel="stylesheet" />
         <!-- GLightbox plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.3.1/css/glightbox.min.css" rel="stylesheet" />
-        <!-- SimpleLightbox plugin CSS-->
-        <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" /> -->
-
+        <!-- Flag Icons plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.5.0/css/flag-icons.min.css" rel="stylesheet" />
+        <script type="text/javascript">
+                        function googleTranslateElementInit() {
+                            new google.translate.TranslateElement({
+                            //pageLanguage: 'es',
+                            autoDisplay: false,
+                            //multilanguagePage: true,
+                            //includedLanguages: 'en',
+                            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+                            }, 'navbarResponsive');
+                        }
+        </script>
     </head>
     <body id="page-top">
-
-
         <!-- Back to top button -->
         <button id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></button>
-
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
@@ -49,10 +56,6 @@
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Piezas</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">Sobre la Virgen</a></li>
                         <li class="nav-item"><a class="nav-link cart" href="" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg">Contacto<span></span><i class="ms-2 far fa-paper-plane"></i></a></li>
-                    <select class="selectpicker" aria-label="selector idioma" data-width="fit">
-                        <option data-content='<span class="flag-icon flag-icon-es"></span>Español'selected>Español</option>
-                        <option value="1" data-content='<span class="flag-icon flag-icon-uk"></span>English'>English</option>
-                    </select>
                     </ul>
                 </div>
             </div>
@@ -182,8 +185,9 @@
         <footer class="bg-white py-4">
             <div class="container px-2">
                 <div class="small text-center text-muted">Copyright &copy; 2025 - Virgen de Consolación del Castillo - <span>Todos los derechos reservados</span></div>
-                    <img class="cruz aos-init aos-animate" src="assets/img/cruz.svg" alt="" data-aos="fade-in">
-                    <div class="viva-cristo-rey small text-center text-muted">In Hoc Signo Vinces</div>
+                <a href="https://nscristiandad.es/" target="_blank">
+                    <img class="cruz aos-init aos-animate" src="assets/img/cruz.svg" alt="" data-aos="fade-in"></a>
+                    <div class="viva-cristo-rey small notranslate text-center text-muted">In Hoc Signo Vinces</div>
             </div>
             <div class="container-fluid p-0">
                 <div class="col-sm-12 text-center">
@@ -192,13 +196,13 @@
                 </div>
             </div>
 
-            <button type="button" class="btn journey-button" data-bs-toggle="modal" data-bs-target=".bd-journey"><i class="fa-solid fa-route me-2"></i></i>Ver tu itinerario</button>
+            <button type="button" class="btn journey-button" data-bs-toggle="modal" data-bs-target=".bd-journey"><i class="fa-solid fa-route me-2"></i>Ver su itinerario</button>
 
             <div class="modal fade bd-journey" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="undefined">
               <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tu itinerario</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-route me-2"></i>Su itinerario en todas las visitas:</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body footer justify-content">
@@ -262,8 +266,9 @@
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- JQuery Cookie plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-               
-
+        <!-- Google Translate library-->
+        <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+        
         <!-- Sync via API data from spreadsheet-->
         <script src="js/fetch-api.js"></script>
         <!-- Core JS-->
