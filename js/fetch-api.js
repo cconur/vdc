@@ -165,7 +165,7 @@ fetch(myRequest)
                                 <div class="col-md-8">
                                     <div class="row tittle-pieza">
                                         <div class="col-sm"><h1 class="h2 mb-3">${rowInfo.nPieza}</h1></div>
-                                        <button class="add btn project-add mb-2 col-sm-auto text-center px-3" data-toggle="tooltip" data-placement="bottom" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg" title="Al puslar se añadirá en el formulario de contacto"><i class="fa-solid fa-thumbtack"></i></button>
+                                        <button class="add btn project-add mb-2 col-sm-auto text-center px-3" data-toggle="tooltip" data-placement="bottom" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg" title="Al puslar se añadirá en el formulario de contacto"><i class="bi bi-pin-angle"></i></button>
                                     </div>
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -224,10 +224,10 @@ fetch(myRequest)
                         //console.log(rowVariant);
                         //console.log(variants.length);
                         newImage.className = "carousel-item";
-                        newImage.classList.add("moreimages");                     
+                        newImage.classList.add("more-images");                     
                         newImage.innerHTML = `
-                        <a class="portfolio-box ratio ratio-16x9" href="${rowVariant.url}" title="${rowVariant.name}">
-                            <img class="img-fluid img-thumbnail object-fit-fill d-block w-100" src="${rowVariant.url}" alt="" />
+                        <a class="portfolio-box" href="${rowVariant.url}" title="${rowVariant.name}">
+                            <img class="img-thumbnail object-fit-fill rounded-3" src="${rowVariant.url}" alt="" />
                         </a>
                         <div class="carousel-caption d-none d-md-block">
                             <span class="badge rounded-pill text-bg-danger">Imagen</span>
@@ -262,7 +262,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="fa-solid fa-image me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="fa-solid fa-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-images me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
@@ -300,11 +300,11 @@ fetch(myRequest)
                         let rowVariant = variants[j];
                         //console.log(rowVariant);
                         //console.log(variants.length);
-                        newVideo.className = "col";
+                        newVideo.className = "more-videos";
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="video-thumbnail ratio ratio-16x9 img-fluid object-fit-fill rounded-3" id="video" title="${rowVariant.name}"
+                        <iframe class="video-thumbnail object-fit-fill rounded-3" id="video" title="${rowVariant.name}"
                         src="${rowVariant.url}">
                         </iframe>
                         `;
@@ -329,7 +329,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="fa-solid fa-video me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="fa-solid fa-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-play-btn me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
@@ -350,13 +350,19 @@ fetch(myRequest)
             for(let j = 0; j < variants.length; j++){
                         var newAudio = document.createElement('div');
                         let rowVariant = variants[j];
+                        var audioName = rowVariant.url.split('-')[3];
+                        if (audioName =="de" || audioName =="en" || audioName =="es" || audioName =="fr")
+                        {var audioNameClass = audioName} else {var audioNameClass = "es"; audioName = "es";};
+                        
                         //console.log(rowVariant);
                         //console.log(variants.length);
-                        newAudio.className = "col";
+                        newAudio.className = "more-audios lang";
+                        newAudio.classList.add(audioNameClass);
                         newAudio.innerHTML = `
-                        <span class="badge rounded-pill text-bg-danger">Audio</span>
+                        
+                        <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioName}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="rounded-pill audio-thumbnail" id="audio" title="${rowVariant.name}"
+                        <iframe class="audio-thumbnail object-fit-fill rounded-pill" id="audio" title="${rowVariant.name}"
                         src="${rowVariant.url}">
                         </iframe>
                         `;
@@ -381,7 +387,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="fa-solid fa-volume-high me-2"></i>Audio<span class="ms-2">${totaMediaTypes}</span><i class="fa-solid fa-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-volume-up me-2"></i>Audio<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
@@ -421,7 +427,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="fa-solid fa-file me-2"></i>Archivos<span class="ms-2">${totaMediaTypes}</span><i class="fa-solid fa-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-file-earmark me-2"></i>Archivos<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
                             </button>
                         </div>
                         `;
@@ -445,12 +451,12 @@ fetch(myRequest)
                         if (appVariant == appType) {
                             //console.log(appVariant+">>BINGO>>>"+appType);
                             var newAppDoc = document.createElement('div');
-                            newAppDoc.className = "col h_iframe";
+                            newAppDoc.className = "more-files";
                             newAppDoc.innerHTML = `
                             <span class="badge rounded-pill text-bg-warning">Archivo</span>
                             <span class="badge rounded-pill text-bg-${color}">${appVariantName}</span>
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                            <iframe class="img-fluid ratio ratio-1x1 file-thumbnail img-thumbnail object-fit-fill" id="archivos" title="${rowVariant.name}"
+                            <iframe class="file-thumbnail object-fit-fill rounded-3" id="archivos" title="${rowVariant.name}"
                             src="${rowVariant.url}">
                             </iframe>
                             `;
@@ -460,7 +466,7 @@ fetch(myRequest)
                         //console.log(appType);
                     };
                 var newApp = document.createElement('div');
-                newApp.classList.add("row");
+                newApp.className = "row w-100";
                 var appVariantName = appVariant.replace("document","Documentos").replace("presentation","Presentaciones").replace("file","Archivos de texto, pdfs,...");
                 
                 var totalUniqueAppTypes = c[appVariant];
@@ -561,6 +567,50 @@ $(document).ready(function(){
             $(this).children().first().toggleClass("active");
         });
 
+// Detecto y cambio idioma
+    var userLang = navigator.language || navigator.userLanguage;
+    console.log('user lang:', userLang);
+  //  userLang = "ru-RU"; 
+
+    var userLangCode = userLang.split('-')[0];
+
+    if ($('.' + userLangCode.length)) {
+        $('.lang').hide();
+        $('.' + userLangCode).show();
+    } else if (userLangCode =="eu" || userLangCode =="ca" || userLangCode =="gl") {
+        $('.lang').hide();
+        $('.es').show();
+    } else {
+    // si no hay match entre el nav.lang y el contenido media de los 4 idiomas, dejo en ingles, lo busco en la clase
+        $('.lang').hide();
+        $('.en').show();
+        //userLangCode = "en";
+    }
+
+    let detLang = '<span class="ms-2 current-language fi fi-'+userLangCode+'"></span>';
+    $("#navbarResponsive").append(detLang);
+
+    // Modifico el widget de google transtale; 
+    $('.goog-te-gadget div').get(0).nextSibling.remove();
+    $('.goog-te-gadget').find('span').hide();
+
+    // Traduzco toda la web segun el idioma detectado; 
+    console.log('user lang code:', userLangCode);
+
+    let index = $(".goog-te-combo option[value="+userLangCode+"]").index();
+    console.log('Index: '+index);
+
+    updateLanguage(userLangCode);
+    
+    function updateLanguage(value) {
+        var selectIndex = 0;
+        var a = document.querySelector(".goog-te-combo");
+        switch (value) {
+        }
+        a.selectedIndex = index;
+        a.dispatchEvent(new Event('change'));
+    }
+        
 });
 
 $(document).ready(function(){
@@ -573,7 +623,8 @@ $(document).ready(function(){
         newField.classList.add(nameidPieza);
 
         if ($('.form-check.'+nameidPieza).length === 0) {
-
+            $(this).find('i').removeClass('bi-pin-angle');
+            $(this).find('i').addClass('bi-pin-fill');
             $(this).addClass("active");
             newField.innerHTML = `
                         <input class="form-check-input" type="checkbox" id="piezas-${nameidPieza}" name="piezas" value="${nameidPieza}" checked />
@@ -654,19 +705,20 @@ $(document).ready(function() {
 
     $('input.deletable').wrap('<span class="deleteicon"></span>').after($('<span><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></span>').click(function() {
         $(this).prev('input').val('').trigger('change').focus();
+        $(".filter-button[data-filter='all']").click();
     }));
 
 
     $(".mediaButton .btn").click(function () {
+        //$(this).css({'transform' : 'rotate('+ degrees +'deg)'});
         $(this).toggleClass("active");
         $(this).parent().next(".mediaContent").toggle('1000');
         $(this).find('.show-details').text(function(i, v){
              return v === 'Ocultar detalles' ? 'Ver detalles' : 'Ocultar detalles'
          })
+        //$(this).find('.bi-arrow-right').addClass('rotated');
     });
 });
-
-
 
 $(document).ready(function(){
 
@@ -721,8 +773,6 @@ $(document).ready(function() {
 
             var seccion = param1Value.split('-')[1];
             console.log(seccion);
-            //$.removeCookie('count');
-            //$.removeCookie('events');
 
             console.log($.cookie('count'));
             console.log($.cookie('events'));
@@ -743,18 +793,19 @@ $(document).ready(function() {
             $.cookie('events', '', { expires: 0.5 });
             $.cookie('count', countValue, { expires: 0.5 });
             let count = $.cookie('count');
-            let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
 
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             console.log(eventsValue);
             $.cookie('events', eventsValue);
             count = parseFloat(count) + 1;
+            console.log(count);
             $.cookie('count', count);
             }
 
             else {
             let count = $.cookie('count');
-            let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Visita número: '+count+'</h4><p>Visitaste la pieza: '+param1Value+'</p></li>');
+            let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             $.cookie('events', eventsValue);
             count = parseFloat(count) + 1;
@@ -764,12 +815,10 @@ $(document).ready(function() {
             
             console.log($.cookie('count'));
             console.log($.cookie('events'));
-            
-
     } 
     else {
-          $('.journey-button').hide();
-         };
+        $('.journey-button').hide();
+    };
 
     // console.log('param2Value:', param2Value);
     
