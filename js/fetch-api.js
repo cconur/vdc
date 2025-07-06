@@ -600,7 +600,9 @@ $(document).ready(function(){
     let index = $(".goog-te-combo option[value="+userLangCode+"]").index();
     console.log('Index: '+index);
 
-    updateLanguage(userLangCode);
+    if (userLangCode !== "es") {
+        updateLanguage(userLangCode);
+    }
     
     function updateLanguage(value) {
         var selectIndex = 0;
