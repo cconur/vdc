@@ -1,5 +1,5 @@
 
-var scriptURL = 'https://script.google.com/macros/s/AKfycbw0nE7FOlb7R-Y0AmIfQ7VtDI-8d5x1BnJyaulHzaEiF_AY-P8aFqhZUNC0Zr7lXKSxAw/exec';
+var scriptURL = 'https://script.google.com/macros/s/AKfycbz-o70yAO93R1XsfNO2LIMdVpLQhu8Y2BRhir_u9hLaiE203JeO_3KkTSTcsNxCbnWC/exec';
 var form = document.forms['submit-to-google-sheet'];
 
 var successMessage = document.getElementById('success-message');
