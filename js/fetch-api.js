@@ -226,13 +226,12 @@ fetch(myRequest)
                         newImage.className = "carousel-item";
                         newImage.classList.add("more-images");                     
                         newImage.innerHTML = `
+                        <span class="badge rounded-pill text-bg-danger">Imagen</span>
+                        <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
                         <a class="portfolio-box" href="${rowVariant.url}" title="${rowVariant.name}">
                             <img class="img-thumbnail object-fit-fill rounded-3" src="${rowVariant.url}" alt="" />
                         </a>
-                        <div class="carousel-caption d-none d-md-block">
-                            <span class="badge rounded-pill text-bg-danger">Imagen</span>
-                            <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        </div>
+
                         `;
                         var newIndicator = document.createElement('button');
                         newIndicator.setAttribute("data-bs-target", "#carouselImages."+idPieza);
@@ -262,7 +261,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-images me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-images me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
@@ -329,7 +328,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-play-btn me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-play-btn me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
@@ -387,7 +386,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i>Audio<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-volume-up me-2"></i>Audio<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
@@ -427,7 +426,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-file-earmark me-2"></i>Archivos<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver detalles</span>
+                            <i class="bi bi-file-earmark me-2"></i>Archivos<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         `;
@@ -451,7 +450,7 @@ fetch(myRequest)
                         if (appVariant == appType) {
                             //console.log(appVariant+">>BINGO>>>"+appType);
                             var newAppDoc = document.createElement('div');
-                            newAppDoc.className = "more-files";
+                            newAppDoc.className = "more-files col";
                             newAppDoc.innerHTML = `
                             <span class="badge rounded-pill text-bg-warning">Archivo</span>
                             <span class="badge rounded-pill text-bg-${color}">${appVariantName}</span>
@@ -637,7 +636,7 @@ $(document).ready(function(){
             var numItems = $('.cart-items .form-check').length;
             $(".cart span").text(numItems);
             $(".cart span").show();
-            $(this).attr("data-bs-original-title", "Pieza añadido");
+            $(this).attr("data-bs-original-title", "Pieza añadida");
             // document.getElementById("tittle-cart-items").scrollIntoView( {behavior: "smooth" });
         }
 
@@ -716,7 +715,7 @@ $(document).ready(function() {
         $(this).toggleClass("active");
         $(this).parent().next(".mediaContent").toggle('1000');
         $(this).find('.show-details').text(function(i, v){
-             return v === 'Ocultar detalles' ? 'Ver detalles' : 'Ocultar detalles'
+             return v === 'Ocultar' ? 'Ver' : 'Ocultar'
          })
         //$(this).find('.bi-arrow-right').addClass('rotated');
     });
@@ -792,8 +791,9 @@ $(document).ready(function() {
             
             if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
             let countValue = 1;
-            $.cookie('events', '', { expires: 0.5 });
-            $.cookie('count', countValue, { expires: 0.5 });
+            $.cookie('events', '', {expires: new Date(2025, 9, 14, 00, 00, 00), secure: true});
+            $.cookie('count', countValue, {expires: new Date(2025, 9, 14, 00, 00, 00), secure: true});
+            //$.cookie('count', countValue, { expires: 0.5 });
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
 
@@ -840,6 +840,12 @@ $(document).ready(function() {
         $(".mediaButton .btn.active").click();
         $(".add").show();
         
+        // elimino parámetros de la url
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
 
     });
 });
