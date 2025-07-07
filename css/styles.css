@@ -7730,7 +7730,7 @@ textarea.form-control-lg {
 }
 
 .mt-6 {
-  margin-top: 2rem !important;
+  margin-top: 4rem !important;
 }
 
 .mt-auto {
@@ -11097,6 +11097,7 @@ header.masthead h1, header.masthead .h1 {
 @media (min-width: 1200px) {
   header.masthead h1, header.masthead .h1 {
     font-size: 5em;
+    margin: auto 0;
   }
 }
 
@@ -11364,14 +11365,23 @@ button[data-filter="all"]{
 .event h4 span,
 .event p span,
 .cart span {
-  background-color:#adadad;
   color: white;
   padding: 2px 7px;
   margin-left:5px;
   text-align:center;
   border-radius: 15px;
   display:none;
-} 
+}
+
+.event p span {
+  background-color:#4b7beb;
+}
+
+.event h4 span,
+.cart span {
+  background-color:#adadad;
+}
+
 
 #filter-piezas .btn,
 #filter-secciones .btn {
@@ -11422,7 +11432,6 @@ span.deleteicon input {
   background-color:#777777;
   color:#ffffff;
   padding:3px 9px;
-  font-size:0.9em;
   border-radius:15px;
 }
 
@@ -11435,11 +11444,9 @@ span.deleteicon input {
 
 .mediaContent span.fi {
   padding:0px!important;
-  background-color:transparent;
-  font-size:0.7em;
-  border: 0.5px solid #fff;
-  border-radius: 3px;
+  border-radius: 15px;
 }
+
 
 
 #loader {
@@ -11597,6 +11604,10 @@ button.add.active {
 
 #tittle-cart-items{
   text-align:center;
+  background-color:#888;
+  padding:2px 15px;
+  color:white;
+  border-radius: 15px;
 }
 
 fieldset.cart-items {
