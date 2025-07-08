@@ -11442,6 +11442,7 @@ span.deleteicon input {
   color:#6a6a6d;
 }
 
+.fi.current-language,
 .mediaContent span.fi {
   padding:0px!important;
   border-radius: 15px;
@@ -11675,7 +11676,17 @@ hr.solid {
   width: 100%!important;
   height: 100%!important;
   object-fit: cover!important;
+  max-height: inherit;
 }
+
+
+.mediaContent .row{
+  max-height: inherit!important;
+  padding:0!important;
+  margin:0!important;
+}
+
+
 
 .slide {
   padding:0;
@@ -11798,7 +11809,7 @@ html.glightbox-open {
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
-  padding:20px;
+  padding:25px!important;
   text-align:center;
 }
 
