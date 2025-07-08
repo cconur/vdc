@@ -124,7 +124,9 @@ fetch(myRequest)
                 head.style.backgroundSize = 'cover';
                 infoVirgen.style.background = 'linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url('+rowInfo.imgDefecto+')';
                 infoVirgen.style.backgroundSize = 'cover';
-                $("#portfolio .claim").text(rowInfo.descripcion);
+                $("#masthead .claim").text(rowInfo.descripcion);
+                $("#portfolio .claim-1").text(rowInfo.otros);
+                $("#portfolio .claim-2").text(rowInfo.detalle);
             };
 
            if (idPieza == "virgen") {
@@ -136,7 +138,7 @@ fetch(myRequest)
                                     <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
                                         <div class="col-sm-12 col-md-6 text-center">
                                             <h2 class="text-white mt-0">${rowInfo.detalle}</h2>
-                                            <p class="opacity-75 wrap text-75 mb-4 px-2">${rowInfo.descripcion}</p>
+                                            <p class="opacity-50 wrap text-75 mb-4 px-2">${rowInfo.descripcion}</p>
                                         </div>
                                         <div class="col-sm-12 col-md-6 text-center">
                                             <div class="shadow"><img class="img-fluid rounded-4" src="${rowInfo.imgDefecto}" alt="virgen del castillo"></div>
@@ -175,7 +177,7 @@ fetch(myRequest)
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.nPieza}</li>
                                         </ol>
                                     </nav>  
-                                    <p class="mb-4">${rowInfo.descripcion.replaceAll("•", "\n")}</p>
+                                    <p class="mb-4 text-muted ">${rowInfo.descripcion.replaceAll("•", "\n")}</p>
                                     <div class="mb-3">
                                         <span class="h7 text-wrap">Tipo de pieza: </span><span class="badge text-bg-primary">${rowInfo.tipo}</span>
                                     </div>
