@@ -402,14 +402,11 @@ fetch(myRequest)
             })
             let totalAudioLangs = String(renderedHtml).replaceAll(",", "");
             console.log(totalAudioLangs);
-
-            
-
             
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i>Audio${totalAudioLangs}<i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <i class="bi bi-volume-up me-2"></i><span>Audio</span>${totalAudioLangs}<i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
