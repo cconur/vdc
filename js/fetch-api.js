@@ -395,16 +395,14 @@ fetch(myRequest)
                 countLangs[appLangs[z]] = 1 + (countLangs[appLangs[z]] || 0);
             }
             console.log(countLangs);
-
-            
-
+            // genero el html para todos los contadores de audios por idioma
             let renderedHtml = [];
             let totalAudioLangs = "";
             Object.entries(countLangs).forEach(([key, value]) => {
                 totalAudioLangs = `<span class="ms-2 lang ${key}">${value}</span>`;
-                renderedHtml.push(totalAudioLangs.join(""));
+                renderedHtml.push(totalAudioLangs);
             })
-            console.log(renderedHtml);
+            console.log(renderedHtml.join(""));
             
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
@@ -884,7 +882,4 @@ $(document).ready(function() {
 
 })
 .catch(console.error);
-
-
-
 
