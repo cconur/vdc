@@ -236,9 +236,9 @@ fetch(myRequest)
 
                         `;
                         var newIndicator = document.createElement('button');
+                        newIndicator.setAttribute("type","button");
                         newIndicator.setAttribute("data-bs-target", "#carouselImages."+idPieza);
                         newIndicator.setAttribute("data-bs-slide-to",j);
-                        newIndicator.setAttribute("aria-current","true");
                         newIndicator.setAttribute("aria-label","Slide "+(j+1));
                         //console.log(newImage);
 
@@ -305,7 +305,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="video-thumbnail object-fit-fill rounded-3" id="video" title="${rowVariant.name}"
+                        <iframe class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"
                         src="${rowVariant.url}">
                         </iframe>
                         `;
@@ -347,48 +347,69 @@ fetch(myRequest)
         var otherVariants = document.createElement('div');
             //para el recuento de archivos media
             var apptypes = [];
+            var appLangs = [];
 
             for(let j = 0; j < variants.length; j++){
                         var newAudio = document.createElement('div');
                         let rowVariant = variants[j];
-                        var audioName = rowVariant.url.split('-')[3];
-                        if (audioName =="de" || audioName =="en" || audioName =="es" || audioName =="fr")
-                        {var audioNameClass = audioName} else {var audioNameClass = "es"; audioName = "es";};
+                        var audioLang = rowVariant.name.split('-').pop().split('.')[0];
+                        
+                        console.log("Idioma Audio: "+audioLang);
+                        if (audioLang =="de" || audioLang =="en" || audioLang =="es" || audioLang =="fr")
+                        {var audioLangClass = audioLang} else {var audioLangClass = "es"; audioLang = "es";};
                         
                         //console.log(rowVariant);
                         //console.log(variants.length);
                         newAudio.className = "more-audios lang";
-                        newAudio.classList.add(audioNameClass);
+                        newAudio.classList.add(audioLangClass);
                         newAudio.innerHTML = `
                         
-                        <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioName}"></span>Audio</span>
+                        <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <iframe class="audio-thumbnail object-fit-fill rounded-pill" id="audio" title="${rowVariant.name}"
-                        src="${rowVariant.url}">
+                        <iframe class="audio-thumbnail rounded-pill" id="audio" title="${rowVariant.name}"
+                        src="${rowVariant.url}" allow="autoplay" crossorigin="anonymous">
                         </iframe>
                         `;
                         //console.log(newAudio);
             //recuento de archivos media           
             apptypes.push(rowVariant);
+            appLangs.push(audioLang);
 
             otherVariants.appendChild(newAudio);           
             };
             
             //recuento de archivos media
-            const c = {};
-            apptypes.forEach(ele => {
-            c[ele] = (c[ele] || 0) + 1;
-            });
-            console.log(c);
-            var totaMediaTypes = Object.values(c);
-            console.log(totaMediaTypes);
+            //const c = {};
+            //apptypes.forEach(ele => {
+            //c[ele] = (c[ele] || 0) + 1;
+            //});
+            //console.log(c);
+            //var totaMediaTypes = Object.values(c);
+            //console.log(totaMediaTypes);
 
             //console.log(otherVariants);
+
+            // Almaceno en un objeto todos los audios por idioma
+            var countLangs = {};
+            for (var z = 0; z < appLangs.length; z++) {
+                countLangs[appLangs[z]] = 1 + (countLangs[appLangs[z]] || 0);
+            }
+            console.log(countLangs);
+
+
+            let renderedHtml = Object.entries(countLangs).map(([key, value]) => {
+                return `<span class="ms-2 lang ${key}">${value}</span>`
+            })
+            let totalAudioLangs = String(renderedHtml).replaceAll(",", "");
+            console.log(totalAudioLangs);
+
+            
+
             
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i>Audio<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <i class="bi bi-volume-up me-2"></i>Audio${totalAudioLangs}<i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
@@ -452,12 +473,12 @@ fetch(myRequest)
                         if (appVariant == appType) {
                             //console.log(appVariant+">>BINGO>>>"+appType);
                             var newAppDoc = document.createElement('div');
-                            newAppDoc.className = "more-files col";
+                            newAppDoc.className = "more-files";
                             newAppDoc.innerHTML = `
                             <span class="badge rounded-pill text-bg-warning">Archivo</span>
                             <span class="badge rounded-pill text-bg-${color}">${appVariantName}</span>
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                            <iframe class="file-thumbnail object-fit-fill rounded-3" id="archivos" title="${rowVariant.name}"
+                            <iframe class="file-thumbnail rounded-3" id="archivos" title="${rowVariant.name}"
                             src="${rowVariant.url}">
                             </iframe>
                             `;
@@ -546,6 +567,7 @@ fetch(myRequest)
 
 
 $(document).ready(function(){
+
 // Activate GLightbox plugin for portfolio items
 // In DOM can be added the file type as data attribute: data-type="image"
 
@@ -566,12 +588,13 @@ $(document).ready(function(){
         });
         $( ".carousel-indicators" ).each( function () {
             $(this).children().first().toggleClass("active");
+            $(this).children().first().attr('aria-current', 'true');
         });
 
 // Detecto y cambio idioma
     var userLang = navigator.language || navigator.userLanguage;
     console.log('user lang:', userLang);
-  //  userLang = "ru-RU"; 
+    //userLang = "ru-RU"; 
 
     var userLangCode = userLang.split('-')[0];
 
@@ -587,7 +610,7 @@ $(document).ready(function(){
         $('.en').show();
         //userLangCode = "en";
     }
-
+    // Pongo la bandera del idioma detectado; 
     let detLang = '<span class="ms-2 current-language fi fi-'+userLangCode+'"></span>';
     $("#navbarResponsive").append(detLang);
 
@@ -598,21 +621,26 @@ $(document).ready(function(){
     // Traduzco toda la web segun el idioma detectado; 
     console.log('user lang code:', userLangCode);
 
+    // Busco el indice del idioma detectado en el widget de google translate
     let index = $(".goog-te-combo option[value="+userLangCode+"]").index();
     console.log('Index: '+index);
 
+    // Traduzco toda la web segun el índice del idioma detectado modificando el select del widget del traductor, excepto para el idioma original (es)
     if (userLangCode !== "es") {
+        console.log('Se procesa la traducción. Idioma distinto al original (es): '+userLangCode);
+        function updateLanguage(value) {
+            //var selectedIndex = 0;
+            var a = document.querySelector(".goog-te-combo");
+            switch (value) {
+            }
+            a.selectedIndex = index;
+            a.dispatchEvent(new Event('change'));
+        }
+
         updateLanguage(userLangCode);
     }
     
-    function updateLanguage(value) {
-        var selectIndex = 0;
-        var a = document.querySelector(".goog-te-combo");
-        switch (value) {
-        }
-        a.selectedIndex = index;
-        a.dispatchEvent(new Event('change'));
-    }
+
         
 });
 
