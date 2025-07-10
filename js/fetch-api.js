@@ -26,6 +26,14 @@ const myFilter = document.getElementById("filter-secciones");
 const myRequest = new Request("https://sheets.googleapis.com/v4/spreadsheets/"+gSheetsFile+"/values/"+sheet+"?alt=json&key="+apiKey);
 
 
+// Detecto y cambio idioma
+var userLang = navigator.language || navigator.userLanguage;
+console.log('user lang:', userLang);
+//userLang = "ru-RU"; 
+
+var userLangCode = userLang.split('-')[0];
+
+
 fetch(myRequest)
 //fetch(myRequest,  {
 //        mode: 'cors',
@@ -123,8 +131,12 @@ fetch(myRequest)
             let rowInfo = result[i]
             const newDiv = document.createElement("div");
             newDiv.className = "row bg-white filter portfolio-pieza";
-            var idPieza = rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase();
+            console.log("NPieza :"+rowInfo.nPieza);
+            
             var idSeccion = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();
+
+            if (rowInfo.nPieza !== undefined) {var idPieza = rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}
+            else {continue};            
             
             if (idPieza !== "" && idSeccion !== "") {newDiv.classList.add(idPieza); newDiv.classList.add(idSeccion)};
 
@@ -165,7 +177,8 @@ fetch(myRequest)
 
 
             newDiv.innerHTML = `
-                            <div class="row mt-4 mb-2">
+                            <div class="col text-center titulo-pieza-qr" style="display:none"><h1 class="h2 mb-3">${rowInfo.nPieza}</h1></div>
+                            <div class="row mt-4 mb-2 ficha-pieza">
                                 <!-- Imagen por defecto -->
                                 <div class="col-md-4 mb-2">
                                     <div class="default-image">
@@ -218,7 +231,7 @@ fetch(myRequest)
             }
 
 
-        if (rowInfo.image !== undefined) {
+        if (rowInfo.image !== undefined && rowInfo.image !== "") {
 
             const csv = rowInfo.image;
             var variants = CsvToArr(csv, ',');
@@ -296,7 +309,7 @@ fetch(myRequest)
                         `;
         }
 
-        if (rowInfo.video !== undefined) {
+        if (rowInfo.video !== undefined && rowInfo.video !== "") {
 
             const csv = rowInfo.video;
             var variants = CsvToArr(csv, ',');
@@ -314,7 +327,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <video controls="controls" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
+                        <video controls="controls" preload="auto" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
                         <source
                             src="${rowVariant.url}?alt=media&key=${apiKey}" 
                             type="video/mp4"
@@ -352,7 +365,7 @@ fetch(myRequest)
                         `;
         }
     
-        if (rowInfo.audio !== undefined) {
+        if (rowInfo.audio !== undefined && rowInfo.audio !=="") {
 ;
             const csv = rowInfo.audio;
             var variants = CsvToArr(csv, ',');
@@ -411,18 +424,23 @@ fetch(myRequest)
                 countLangs[appLangs[z]] = 1 + (countLangs[appLangs[z]] || 0);
             }
             console.log(countLangs);
-            // genero el html para todos los contadores de audios por idioma
-            //let renderedHtml = [];
-            let totalAudioLangs = "";
-            Object.entries(countLangs).forEach(([key, value]) => {
-                totalAudioLangs += '<span class="ms-2 lang '+key+'">'+value+'</span>';
-            })
-            console.log(totalAudioLangs);
+
+            function getValueByKey(object, row) {
+            return object[row];
+            }
+
+            let totalAudioLang = getValueByKey(countLangs, userLangCode);
+
+            if (totalAudioLang == undefined) {totalAudioLang = getValueByKey(countLangs, "en")}
+
+            console.log(userLangCode);
+            console.log(totalAudioLang);
+   
             
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i><span>Audio</span>${totalAudioLangs}<i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <i class="bi bi-volume-up me-2"></i><span>Audio</span><span class="ms-2">${totalAudioLang}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
                         <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
@@ -431,7 +449,7 @@ fetch(myRequest)
                         `;
         }
 
-        if (rowInfo.application !== undefined) {
+        if (rowInfo.application !== undefined && rowInfo.application !== "") {
 
             //console.log(rowInfo.image);
             const csv = rowInfo.application;
@@ -594,6 +612,9 @@ $(document).ready(function(){
             selector: '.video-thumbnail'
         });
 
+});
+
+$(document).ready(function(){
 // Inicializo el carrusel de Bootstrap
         const carousel = new bootstrap.Carousel('#carouselImages');
         $( ".carousel-inner" ).each( function () {
@@ -604,12 +625,13 @@ $(document).ready(function(){
             $(this).children().first().attr('aria-current', 'true');
         });
 
-// Detecto y cambio idioma
-    var userLang = navigator.language || navigator.userLanguage;
-    console.log('user lang:', userLang);
-    //userLang = "ru-RU"; 
+});
 
-    var userLangCode = userLang.split('-')[0];
+$(document).ready(function(){
+// Cambio idioma una vez todo se ha renderizado
+
+    console.log('user lang:', userLang);
+    console.log('user lang Code:', userLangCode);
 
     if ($('.' + userLangCode.length)) {
         $('.lang').hide();
@@ -798,6 +820,9 @@ $(document).ready(function() {
 
     if (urlParams.has('param1')) {
         // eventos si hay parámetro
+        $('.ficha-pieza').hide();
+        $('.titulo-pieza-qr').show('1000');
+        $('.mediaButton .btn').click();
         $('.journey-button').show('1000');
         $('.filter').hide();
         $('.filter.'+param1Value).show('1000');
@@ -868,6 +893,9 @@ $(document).ready(function() {
     // console.log('param2Value:', param2Value);
     
     $(".backToMain").click(function () {
+        $('.titulo-pieza-qr').hide();
+        $('.mediaButton .btn').click();
+        $('.ficha-pieza').show();
         $('.filter').show();
         $(".navbar-nav").show();
         //$("#filter-piezas").hide();
