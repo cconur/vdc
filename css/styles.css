@@ -11607,6 +11607,7 @@ button.add.active {
   text-align:center;
   background-color:#888;
   padding:2px 15px;
+  font-size:1.2em;
   color:white;
   border-radius: 15px;
 }
@@ -11677,11 +11678,15 @@ hr.solid {
   height: 100%!important;
   object-fit: cover!important;
   max-height: inherit;
+  background-color:white;
+  margin-bottom:5px;
+  object-fit: cover!important;
 }
 
 
 .mediaContent .row{
   max-height: inherit!important;
+  display: flex;
   padding:0!important;
   margin:0!important;
 }
