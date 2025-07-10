@@ -152,7 +152,7 @@ fetch(myRequest)
 
             else if (idPieza !== "" && idPieza !== "virgen" && idPieza !== "portada"){
             
-            console.log("check :"+idPieza);
+            //console.log("check :"+idPieza);
 
 
             newDiv.innerHTML = `
@@ -333,7 +333,7 @@ fetch(myRequest)
                             <i class="bi bi-play-btn me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
-                        <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
+                        <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
                         </div>
                         `;
@@ -396,20 +396,23 @@ fetch(myRequest)
             }
             console.log(countLangs);
 
+            
 
-            let renderedHtml = Object.entries(countLangs).map(([key, value]) => {
-                return `<span class="ms-2 lang ${key}">${value}</span>`
+            let renderedHtml = [];
+            let totalAudioLangs = "";
+            Object.entries(countLangs).forEach(([key, value]) => {
+                totalAudioLangs = `<span class="ms-2 lang ${key}">${value}</span>`;
+                renderedHtml.push(totalAudioLangs.join(""));
             })
-            let totalAudioLangs = String(renderedHtml).replaceAll(",", "");
-            console.log(totalAudioLangs);
+            console.log(renderedHtml);
             
             newDiv.innerHTML += `
                         <div class="row mediaButton mb-4">
                             <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i><span>Audio</span>${totalAudioLangs}<i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <i class="bi bi-volume-up me-2"></i><span>Audio</span>${renderedHtml.join("")}<i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
-                        <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
+                        <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
                         </div>
                         `;
@@ -501,7 +504,7 @@ fetch(myRequest)
 
             };
             newDiv.innerHTML += `
-                <div class="row mediaContent mb-4" id="${rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}" style="display: none;">
+                <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
                         ${otherAppVariants.innerHTML}
                 </div>
                 `;
