@@ -1,15 +1,8 @@
 const head = document.getElementById("masthead");
 const infoVirgen = document.getElementById("about");
 
-//API pruebas vdc
-//const apiKey = "AIzaSyAHboM6ymynP11uObDSMrJM6wQugHw4BbM";
-
-//API pruebas ldf
-//const apiKey = "AIzaSyAsVQie8btmRLZnGeJEKikmjE73MDL6450";
-
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
-
 
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
@@ -283,12 +276,12 @@ fetch(myRequest)
             //console.log(otherVariants);
             
             newDiv.innerHTML += `
-                        <div class="row mediaButton mb-4">
+                        <div class="row mediaButton image mb-4">
                             <button class="btn">
                             <i class="bi bi-images me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
-                        <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
+                        <div class="row mediaContent image mb-4" id="${idPieza}" style="display: none;">
                         <div id="carouselImages" class="carousel slide ${idPieza}">
                             <div class="carousel-indicators">
                             ${indicators.innerHTML}
@@ -354,12 +347,12 @@ fetch(myRequest)
             //console.log(otherVariants);
             
             newDiv.innerHTML += `
-                        <div class="row mediaButton mb-4">
+                        <div class="row mediaButton video mb-4">
                             <button class="btn">
                             <i class="bi bi-play-btn me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
-                        <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
+                        <div class="row mediaContent video mb-4" id="${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
                         </div>
                         `;
@@ -438,12 +431,12 @@ fetch(myRequest)
    
             
             newDiv.innerHTML += `
-                        <div class="row mediaButton mb-4">
+                        <div class="row mediaButton audio mb-4">
                             <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i><span>Audio</span><span class="ms-2">${totalAudioLang}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <i class="bi bi-volume-up me-2"></i>Audioguía<span class="ms-2 counter">${totalAudioLang}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
                         </div>
-                        <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
+                        <div class="row mediaContent audio mb-4" id="${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
                         </div>
                         `;
@@ -478,7 +471,7 @@ fetch(myRequest)
             //console.log(otherVariants);
             
             newDiv.innerHTML += `
-                        <div class="row mediaButton mb-4">
+                        <div class="row mediaButton file mb-4">
                             <button class="btn">
                             <i class="bi bi-file-earmark me-2"></i>Archivos<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
                             </button>
@@ -509,9 +502,12 @@ fetch(myRequest)
                             <span class="badge rounded-pill text-bg-warning">Archivo</span>
                             <span class="badge rounded-pill text-bg-${color}">${appVariantName}</span>
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                            <iframe class="file-thumbnail rounded-3" id="archivos" title="${rowVariant.name}"
-                            src="${rowVariant.url}">
-                            </iframe>
+
+                            <object class="file-thumbnail rounded-3" id="archivos" title="${rowVariant.name}"
+                            src="${rowVariant.url}" frameborder="0" allowfullscreen  
+                            type="application/pdf">
+                            </object>
+
                             `;
                             //console.log(newApp);
                             otherVariants.appendChild(newAppDoc);
@@ -535,7 +531,7 @@ fetch(myRequest)
 
             };
             newDiv.innerHTML += `
-                <div class="row mediaContent mb-4" id="${idPieza}" style="display: none;">
+                <div class="row mediaContent file mb-4" id="${idPieza}" style="display: none;">
                         ${otherAppVariants.innerHTML}
                 </div>
                 `;
@@ -608,8 +604,12 @@ $(document).ready(function(){
             descPosition: 'bottom'
         });
 
-        var lightbox2 = GLightbox({
+        var lightbox1 = GLightbox({
             selector: '.video-thumbnail'
+        });
+
+        var lightbox2 = GLightbox({
+            selector: '.audio-thumbnail'
         });
 
 });
@@ -617,13 +617,18 @@ $(document).ready(function(){
 $(document).ready(function(){
 // Inicializo el carrusel de Bootstrap
         const carousel = new bootstrap.Carousel('#carouselImages');
-        $( ".carousel-inner" ).each( function () {
+        $(".carousel-inner").each( function () {
             $(this).children().first().toggleClass("active");
         });
-        $( ".carousel-indicators" ).each( function () {
+        $(".carousel-indicators").each( function () {
             $(this).children().first().toggleClass("active");
             $(this).children().first().attr('aria-current', 'true');
         });
+});
+
+$(document).ready(function(){
+// oculto botones sin contenido que coincida con el idioma detectado
+    $('.counter:contains("undefined")').parent().parent().hide();
 
 });
 
