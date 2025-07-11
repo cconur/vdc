@@ -130,7 +130,7 @@ fetch(myRequest)
             newDiv.className = "row bg-white filter portfolio-pieza";
             console.log("NPieza :"+rowInfo.nPieza);
             
-            var idSeccion = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();
+            if (rowInfo.seccion !== undefined) {var idSeccion = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();}
 
             if (rowInfo.nPieza !== undefined) {var idPieza = rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}
             else {continue};            
@@ -168,13 +168,13 @@ fetch(myRequest)
 
             }
 
-            else if (idPieza !== "" && idPieza !== "virgen" && idPieza !== "portada"){
+            else if (idPieza !== "" && idPieza !== undefined && idPieza !== "virgen" && idPieza !== "portada"){
             
             //console.log("check :"+idPieza);
 
 
             newDiv.innerHTML = `
-                            <div class="col text-center titulo-pieza-qr" style="display:none"><h1 class="h2 mb-3">${rowInfo.nPieza}</h1></div>
+                            <div class="col text-center titulo-pieza-qr" style="display:none"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                             <div class="row mt-4 mb-2 ficha-pieza">
                                 <!-- Imagen por defecto -->
                                 <div class="col-md-4 mb-2">
@@ -185,7 +185,7 @@ fetch(myRequest)
                                 <!-- Detalles de la pieza -->
                                 <div class="col-md-8">
                                     <div class="row tittle-pieza">
-                                        <div class="col-sm"><h1 class="h2 mb-3">${rowInfo.nPieza}</h1></div>
+                                        <div class="col-sm"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                                         <button class="add btn project-add mb-2 col-sm-auto text-center px-3" data-toggle="tooltip" data-placement="bottom" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg" title="Al puslar se añadirá en el formulario de contacto"><i class="bi bi-pin-angle"></i></button>
                                     </div>
                                     <nav aria-label="breadcrumb">
@@ -618,10 +618,6 @@ $(document).ready(function(){
             descPosition: 'top'
         });
 
-        var lightbox1 = GLightbox({
-            selector: '.video-thumbnail'
-        });
-
 });
 
 $(document).ready(function(){
@@ -849,9 +845,10 @@ $(document).ready(function() {
 
     if (urlParams.has('param1')) {
         // eventos si hay parámetro
-        $('.ficha-pieza').hide();
-        $('.titulo-pieza-qr').show('1000');
-        $('.mediaButton .btn').click();
+        $('.under-construction').hide();
+        //$('.ficha-pieza').hide();
+        $('.titulo-pieza-qr').hide();
+        $('.mediaButton.audio .btn').click();
         $('.journey-button').show('1000');
         $('.filter').hide();
         $('.filter.'+param1Value).show('1000');
@@ -919,15 +916,16 @@ $(document).ready(function() {
     } 
     else {
         $('.journey-button').hide();
-        //$("#portfolio").remove();
+        // Url sin params, elemino toda la exposicion
+        $("#portfolio").remove();
 
     };
 
     // console.log('param2Value:', param2Value);
     
     $(".backToMain").click(function () {
-        $('.titulo-pieza-qr').hide();
-        $('.mediaButton .btn').click();
+        //$('.titulo-pieza-qr').hide();
+        $('.mediaButton.audio .btn').click();
         $('.ficha-pieza').show();
         $('.filter').show();
         $(".navbar-nav").show();
