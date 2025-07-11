@@ -1,8 +1,14 @@
 const head = document.getElementById("masthead");
 const infoVirgen = document.getElementById("about");
 
+//API pruebas vdc
+//const apiKey = "AIzaSyAHboM6ymynP11uObDSMrJM6wQugHw4BbM";
+
+//API pruebas ldf
+const apiKey = "AIzaSyAsVQie8btmRLZnGeJEKikmjE73MDL6450";
+
 //API securizada vdc
-const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
+//const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
 
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
@@ -602,15 +608,11 @@ $(document).ready(function(){
         var lightbox = GLightbox({
             selector: '.portfolio-box',
             type: 'image',
-            descPosition: 'bottom'
+            descPosition: 'top'
         });
 
         var lightbox1 = GLightbox({
             selector: '.video-thumbnail'
-        });
-
-        var lightbox2 = GLightbox({
-            selector: '.audio-thumbnail'
         });
 
 });
