@@ -1,14 +1,8 @@
 const head = document.getElementById("masthead");
 const infoVirgen = document.getElementById("about");
 
-//API pruebas vdc
-//const apiKey = "AIzaSyAHboM6ymynP11uObDSMrJM6wQugHw4BbM";
-
-//API pruebas ldf
-const apiKey = "AIzaSyAsVQie8btmRLZnGeJEKikmjE73MDL6450";
-
 //API securizada vdc
-//const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
+const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
 
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
@@ -28,8 +22,11 @@ const myRequest = new Request("https://sheets.googleapis.com/v4/spreadsheets/"+g
 
 // Detecto y cambio idioma
 var userLang = navigator.language || navigator.userLanguage;
+
+//userLang = "eu-EU"; 
+
 console.log('user lang:', userLang);
-//userLang = "ru-RU"; 
+
 
 var userLangCode = userLang.split('-')[0];
 
@@ -259,7 +256,7 @@ fetch(myRequest)
                         `;
                         var newIndicator = document.createElement('button');
                         newIndicator.setAttribute("type","button");
-                        newIndicator.setAttribute("data-bs-target", "#carouselImages."+idPieza);
+                        newIndicator.setAttribute("data-bs-target", "#carouselImages-"+idPieza);
                         newIndicator.setAttribute("data-bs-slide-to",j);
                         newIndicator.setAttribute("aria-label","Slide "+(j+1));
                         //console.log(newImage);
@@ -289,7 +286,7 @@ fetch(myRequest)
                             </button>
                         </div>
                         <div class="row mediaContent image mb-4" id="${idPieza}" style="display: none;">
-                        <div id="carouselImages" class="carousel slide ${idPieza}">
+                        <div id="carouselImages-${idPieza}" class="carousel slide ${idPieza}">
                             <div class="carousel-indicators">
                             ${indicators.innerHTML}
                             </div>
@@ -381,8 +378,10 @@ fetch(myRequest)
                         var audioLang = rowVariant.name.split('-').pop().split('.')[0];
                         
                         console.log("Idioma Audio: "+audioLang);
-                        if (audioLang =="de" || audioLang =="en" || audioLang =="es" || audioLang =="fr")
-                        {var audioLangClass = audioLang} else {var audioLangClass = "es"; audioLang = "es";};
+                        if (audioLang =="de" || audioLang =="es" || audioLang =="fr")
+                        {var audioLangClass = audioLang} 
+                        else if (audioLang =="en") {var audioLangClass = "en"; audioLang = "gb";}
+                        else {var audioLangClass = "es"; audioLang = "es";};
                         
                         //console.log(rowVariant);
                         //console.log(variants.length);
@@ -392,7 +391,7 @@ fetch(myRequest)
                         
                         <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <audio controls="controls" preload="none" class="audio-thumbnail rounded-pill" id="audio" title="${rowVariant.name}"> 
+                        <audio controls="controls" preload="none" class="audio-thumbnail" id="audio" title="${rowVariant.name}"> 
                         <source
                             src="${rowVariant.url}?alt=media&key=${apiKey}" 
                             type="audio/mp3"
@@ -428,10 +427,18 @@ fetch(myRequest)
             function getValueByKey(object, row) {
             return object[row];
             }
-
+            // Saco el total de audios si el idioma del sistema coincide con los de los audios
             let totalAudioLang = getValueByKey(countLangs, userLangCode);
+            console.log("cuento archivos en el idioma detectado: "+totalAudioLang);
+            // Si el idioma del sistema no coincide con ningun recuento, selecciono el de las que están en inglés
+            if (totalAudioLang == undefined) {
+                if (userLangCode =="eu" || userLangCode =="ca" || userLangCode =="gl")
+                {totalAudioLang = getValueByKey(countLangs, "es")}
+                else 
+                {totalAudioLang = getValueByKey(countLangs, "gb")}
+            }
 
-            if (totalAudioLang == undefined) {totalAudioLang = getValueByKey(countLangs, "en")}
+            else {totalAudioLang = getValueByKey(countLangs, userLangCode)};
 
             console.log(userLangCode);
             console.log(totalAudioLang);
@@ -619,7 +626,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 // Inicializo el carrusel de Bootstrap
-        const carousel = new bootstrap.Carousel('#carouselImages');
+        const carousel = new bootstrap.Carousel('.carousel');
         $(".carousel-inner").each( function () {
             $(this).children().first().toggleClass("active");
         });
@@ -640,21 +647,35 @@ $(document).ready(function(){
 
     console.log('user lang:', userLang);
     console.log('user lang Code:', userLangCode);
+    console.log('Apago todo y activo idioma: '+userLangCode);
+    console.log('Existe contenido con mi idioma?: '+$('.' + userLangCode).length);
 
-    if ($('.' + userLangCode.length)) {
+    // Oculto los audios o contenido que no correspondan al idioma del sistema, con algunas excepciones
+    if ($('.' + userLangCode).length) {
+
+        console.log('camino 1');
         $('.lang').hide();
         $('.' + userLangCode).show();
-    } else if (userLangCode =="eu" || userLangCode =="ca" || userLangCode =="gl") {
+    } else if (userLangCode == "eu" || userLangCode == "ca" || userLangCode == "gl") {
+        console.log('camino 2');
         $('.lang').hide();
         $('.es').show();
     } else {
     // si no hay match entre el nav.lang y el contenido media de los 4 idiomas, dejo en ingles, lo busco en la clase
+    console.log('camino 3');
         $('.lang').hide();
+        $('.' + userLangCode).show();
         $('.en').show();
-        //userLangCode = "en";
     }
-    // Pongo la bandera del idioma detectado; 
-    let detLang = '<span class="ms-2 current-language fi fi-'+userLangCode+'"></span>';
+    // Pongo la bandera del idioma detectado;
+    let userLangCodeFlag = "";
+    if (userLangCode == "en") {userLangCodeFlag = "gb"}
+    else if (userLangCode == "ca") {userLangCodeFlag = "es-ct"}
+    else if (userLangCode == "eu") {userLangCodeFlag = "es-pv"}
+    else if (userLangCode == "gl") {userLangCodeFlag = "es-ga"}
+    else {userLangCodeFlag = userLangCode};
+    
+    let detLang = '<span class="ms-2 current-language fi fi-'+userLangCodeFlag+'"></span>';
     $("#navbarResponsive").append(detLang);
 
     // Modifico el widget de google transtale; 
@@ -854,10 +875,12 @@ $(document).ready(function() {
             console.log($.cookie('count'));
             console.log($.cookie('events'));
 
-            if(seccion == "s08") {
-                var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
-                $("#portfolio").append(restore);
-            };
+
+// Añado la opción de ver toda la web si estás en la sección 8
+//            if(seccion == "s08") {
+//                var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+//                $("#portfolio").append(restore);
+//            };
 
             const event = new Date();
             let time = event.toLocaleString();
@@ -896,6 +919,8 @@ $(document).ready(function() {
     } 
     else {
         $('.journey-button').hide();
+        //$("#portfolio").remove();
+
     };
 
     // console.log('param2Value:', param2Value);
