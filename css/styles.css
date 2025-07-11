@@ -11607,7 +11607,7 @@ button.add.active {
   text-align:center;
   background-color:#888;
   padding:2px 15px;
-  font-size:1.2em;
+  font-size:1em;
   color:white;
   border-radius: 15px;
 }
@@ -11663,7 +11663,7 @@ hr.solid {
 
 .audio-thumbnail {
   width: 100%!important;
-  height: 60px!important;
+  height: 70px!important;
   max-width: 100%;
 }
 
