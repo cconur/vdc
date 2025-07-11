@@ -4,6 +4,7 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
+
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -320,7 +321,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <video controls="controls" preload="auto" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
+                        <video controls="controls" preload="none" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
                         <source
                             src="${rowVariant.url}?alt=media&key=${apiKey}" 
                             type="video/mp4"
@@ -385,7 +386,7 @@ fetch(myRequest)
                         
                         <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <audio controls="controls" class="audio-thumbnail rounded-pill" id="audio" title="${rowVariant.name}"> 
+                        <audio controls="controls" preload="none" class="audio-thumbnail rounded-pill" id="audio" title="${rowVariant.name}"> 
                         <source
                             src="${rowVariant.url}?alt=media&key=${apiKey}" 
                             type="audio/mp3"
