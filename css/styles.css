@@ -11333,6 +11333,10 @@ button[data-filter="all"]{
   text-transform:uppercase;
 }
 
+.mediaButton .btn {
+  padding: 0.5rem;
+}
+
 .btn
 {
   font-size: 18px;
@@ -11818,9 +11822,13 @@ html.glightbox-open {
   text-align:center;
 }
 
+.journey-button:hover {
+  background-color: #bbb;
+}
 
 .journey-button {
     position: fixed;
+    background-color: #eeeff2;
     bottom: 25px;
     left: 25px;
     height: 50px;
@@ -11951,4 +11959,14 @@ width: 40%!important;
 .goog-te-combo,
 .goog-te-combo option{
 width: 100%!important;
+}
+
+.number-circle {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    background: #777777;
+    color: #ffffff;
+    text-align: center;
 }
