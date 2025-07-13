@@ -4,7 +4,6 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
-
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -281,8 +280,8 @@ fetch(myRequest)
             
             newDiv.innerHTML += `
                         <div class="row mediaButton image mb-4">
-                            <button class="btn">
-                            <i class="bi bi-images me-2"></i>Imagenes<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <button class="btn d-flex">
+                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-images mx-2"></i>Imagen/es</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         <div class="row mediaContent image mb-4" id="${idPieza}" style="display: none;">
@@ -352,8 +351,8 @@ fetch(myRequest)
             
             newDiv.innerHTML += `
                         <div class="row mediaButton video mb-4">
-                            <button class="btn">
-                            <i class="bi bi-play-btn me-2"></i>Video<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <button class="btn d-flex">
+                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-collection-play mx-2"></i>Vídeo/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         <div class="row mediaContent video mb-4" id="${idPieza}" style="display: none;">
@@ -446,8 +445,8 @@ fetch(myRequest)
             
             newDiv.innerHTML += `
                         <div class="row mediaButton audio mb-4">
-                            <button class="btn">
-                            <i class="bi bi-volume-up me-2"></i>Audioguía<span class="ms-2 counter">${totalAudioLang}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <button class="btn d-flex">
+                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-volume-up mx-2"></i>Audioguía/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totalAudioLang}</div>
                             </button>
                         </div>
                         <div class="row mediaContent audio mb-4" id="${idPieza}" style="display: none;">
@@ -486,8 +485,8 @@ fetch(myRequest)
             
             newDiv.innerHTML += `
                         <div class="row mediaButton file mb-4">
-                            <button class="btn">
-                            <i class="bi bi-file-earmark me-2"></i>Archivos<span class="ms-2">${totaMediaTypes}</span><i class="bi bi-arrow-right mx-2"></i><span class="show-details ml-3">Ver</span>
+                            <button class="btn d-flex">
+                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-file-earmark mx-2"></i>Archivo/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         `;
@@ -518,7 +517,7 @@ fetch(myRequest)
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
 
                             <object class="file-thumbnail rounded-3" id="archivos" title="${rowVariant.name}"
-                            src="${rowVariant.url}" frameborder="0" allowfullscreen  
+                            data="${rowVariant.url}?alt=media&key=${apiKey}" frameborder="0" allowfullscreen  
                             type="application/pdf">
                             </object>
 
