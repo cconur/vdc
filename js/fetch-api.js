@@ -4,6 +4,7 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
+
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -206,7 +207,7 @@ fetch(myRequest)
 
                             if (rowInfo.image !== undefined || rowInfo.audio !== undefined || rowInfo.video !== undefined || rowInfo.application !== undefined) {
                                 newDiv.innerHTML += `
-                                    <div class="row more-info">
+                                    <div class="row more-info" id="more-info">
                                         <h2 class="h5 text-wrap"><i class="fa-solid me-2 fa-circle-info"></i>Información adicional de esta pieza:</h2>
                                     </div>
                             `;
@@ -446,7 +447,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton audio mb-4">
                             <button class="btn d-flex">
-                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-volume-up mx-2"></i>Audioguía/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totalAudioLang}</div>
+                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-headphones mx-2"></i>Audioguía/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totalAudioLang}</div>
                             </button>
                         </div>
                         <div class="row mediaContent audio mb-4" id="${idPieza}" style="display: none;">
@@ -517,7 +518,7 @@ fetch(myRequest)
                             <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
 
                             <object class="file-thumbnail rounded-3" id="archivos" title="${rowVariant.name}"
-                            data="${rowVariant.url}?alt=media&key=${apiKey}" frameborder="0" allowfullscreen  
+                            data="${rowVariant.url}/export?mimeType=application/pdf&key=${apiKey}" frameborder="0" allowfullscreen  
                             type="application/pdf">
                             </object>
 
@@ -844,6 +845,11 @@ $(document).ready(function() {
 
     if (urlParams.has('param1')) {
         // eventos si hay parámetro
+
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#more-info").offset().top
+        }, 1000);
+
         $('.under-construction').hide();
         //$('.ficha-pieza').hide();
         $('.titulo-pieza-qr').hide();
@@ -852,7 +858,6 @@ $(document).ready(function() {
         $('.filter').hide();
         $('.filter.'+param1Value).show('1000');
         //$('[data-filter="'+param1Value+'"]').click();
-        document.getElementById("filter-secciones").scrollIntoView( {behavior: "smooth"});
         console.log('param1Value:', param1Value);
             $(".navbar-nav").hide();
             //$("#filter-piezas").hide();
@@ -861,7 +866,6 @@ $(document).ready(function() {
             $("#about").hide();
             $("#contact").hide();
             $("#portfolio").addClass("mt-6");
-            document.getElementById("loop").scrollIntoView( {behavior: "smooth" });
             $("#mainNav").addClass("dark");
             $(".add").hide();
 
