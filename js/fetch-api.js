@@ -4,7 +4,6 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
-
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -282,7 +281,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton image mb-4">
                             <button class="btn d-flex">
-                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-images mx-2"></i>Imagen/es</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
+                            <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-images"></i>z/span>Imagen/es</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         <div class="row mediaContent image mb-4" id="${idPieza}" style="display: none;">
@@ -353,7 +352,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton video mb-4">
                             <button class="btn d-flex">
-                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-collection-play mx-2"></i>Vídeo/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
+                            <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-collection-play"></i></span>Vídeo/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         <div class="row mediaContent video mb-4" id="${idPieza}" style="display: none;">
@@ -447,7 +446,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton audio mb-4">
                             <button class="btn d-flex">
-                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-headphones mx-2"></i>Audioguía/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totalAudioLang}</div>
+                            <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-headphones"></i></span>Audioguía/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totalAudioLang}</div>
                             </button>
                         </div>
                         <div class="row mediaContent audio mb-4" id="${idPieza}" style="display: none;">
@@ -487,7 +486,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton file mb-4">
                             <button class="btn d-flex">
-                            <div class="flex-fill text-start align-middle py-1 me-2"><i class="bi bi-file-earmark mx-2"></i>Archivo/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
+                            <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-file-earmark"></i></span>Archivo/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         `;
@@ -886,12 +885,15 @@ $(document).ready(function() {
             let time = event.toLocaleString();
             console.log(time);
 
-            // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h, en este caso 12:
+            var visita = {}, itinerario = [];
+
+            // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h:
             
             if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
             let countValue = 1;
-            $.cookie('events', '', {expires: new Date(2025, 9, 14, 00, 00, 00), secure: true});
-            $.cookie('count', countValue, {expires: new Date(2025, 9, 14, 00, 00, 00), secure: true});
+            $.cookie('events', '', {expires: 61, secure: true});
+            $.cookie('count', countValue, {expires: 61, secure: true});
+            $.cookie('visita', visita, {expires: 61, secure: true});
             //$.cookie('count', countValue, { expires: 0.5 });
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
@@ -902,6 +904,11 @@ $(document).ready(function() {
             count = parseFloat(count) + 1;
             console.log(count);
             $.cookie('count', count);
+
+            visita.pieza = param1Value;
+            visita.hora = time;
+            itinerario.push({visita: visita});
+            $.cookie('visita', visita);
             }
 
             else {
@@ -912,10 +919,16 @@ $(document).ready(function() {
             count = parseFloat(count) + 1;
             $.cookie('count', count);
             console.log(eventsValue);
+
+            visita.pieza = param1Value;
+            visita.hora = time;
+            itinerario.push({visita: visita});
+            $.cookie('visita', visita);
             }
             
             console.log($.cookie('count'));
             console.log($.cookie('events'));
+            console.log(itinerario);
     } 
     else {
         $('.journey-button').hide();
