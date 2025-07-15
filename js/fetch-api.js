@@ -4,6 +4,7 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
+
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -922,6 +923,7 @@ $(document).ready(function() {
 
             visita.pieza = param1Value;
             visita.hora = time;
+            itinerario.push({visita: $.cookie('visita')});
             itinerario.push({visita: visita});
             $.cookie('visita', visita);
             }
