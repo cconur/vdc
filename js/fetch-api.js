@@ -128,7 +128,7 @@ fetch(myRequest)
             let rowInfo = result[i]
             const newDiv = document.createElement("div");
             newDiv.className = "row bg-white filter portfolio-pieza";
-            console.log("NPieza :"+rowInfo.nPieza);
+            //console.log("NPieza :"+rowInfo.nPieza);
             
             if (rowInfo.seccion !== undefined) {var idSeccion = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();}
 
@@ -841,6 +841,12 @@ $(document).ready(function() {
     const param1Value = urlParams.get('param1');
     // const param2Value = urlParams.get('param2');
 
+
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
+
+
     console.log(urlParams.has('param1')); // true
 
     if (urlParams.has('param1')) {
@@ -886,15 +892,16 @@ $(document).ready(function() {
             let time = event.toLocaleString();
             console.log(time);
 
-            var visita = {}, itinerario = [];
-
             // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h:
             
             if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
             let countValue = 1;
+
+            let itinerario = {};
+
             $.cookie('events', '', {expires: 61, secure: true});
             $.cookie('count', countValue, {expires: 61, secure: true});
-            $.cookie('visita', visita, {expires: 61, secure: true});
+            $.cookie('visita', itinerario, {expires: 61, secure: true});
             //$.cookie('count', countValue, { expires: 0.5 });
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
@@ -906,10 +913,12 @@ $(document).ready(function() {
             console.log(count);
             $.cookie('count', count);
 
-            visita.pieza = param1Value;
-            visita.hora = time;
-            itinerario.push({visita: visita});
-            $.cookie('visita', visita);
+
+            let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+            console.log(visita);
+            $.cookie('visita', itinerario);
+            console.log($.cookie('visita'));
+
             }
 
             else {
@@ -920,17 +929,17 @@ $(document).ready(function() {
             count = parseFloat(count) + 1;
             $.cookie('count', count);
             console.log(eventsValue);
+            let itinerario = $.cookie('visita');
 
-            visita.pieza = param1Value;
-            visita.hora = time;
-            itinerario.push({visita: $.cookie('visita')});
-            itinerario.push({visita: visita});
+            let visita = Object.assign(itinerario, { count: { hora:  time, pieza: param1Value} });
+            console.log(visita);
             $.cookie('visita', visita);
+            console.log($.cookie('visita'));
             }
             
-            console.log($.cookie('count'));
-            console.log($.cookie('events'));
-            console.log(itinerario);
+            //console.log($.cookie('count'));
+            //console.log($.cookie('events'));
+            //console.log(itinerario);
     } 
     else {
         $('.journey-button').hide();
