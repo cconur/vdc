@@ -842,9 +842,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -899,17 +899,29 @@ $(document).ready(function() {
 
             let itinerario = {};
 
-            $.cookie('events', '', {expires: 61, secure: true});
-            $.cookie('count', countValue, {expires: 61, secure: true});
-            $.cookie('visita', itinerario, {expires: 61, secure: true});
-            //$.cookie('count', countValue, { expires: 0.5 });
+            var start = new Date();
+            var end = new Date("14 Sep 2025");// Finaliza la exposición
+
+            // end - start returns difference in milliseconds 
+            var diff = new Date(end - start);
+
+            // get days
+            var days = parseInt(diff/1000/60/60/24);
+            console.log("Ahora :"+start);
+            console.log("Fin :"+end);
+            console.log("Dias :"+days);
+
+            $.cookie('events', '', {expires: days, secure: true});
+            $.cookie('count', countValue, {expires: days, secure: true});
+            $.cookie('visita', itinerario, {expires: days, secure: true});
+   
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
 
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             console.log(eventsValue);
             $.cookie('events', eventsValue);
-            count = parseFloat(count) + 1;
+            count = parseInt(count) + 1;
             console.log(count);
             $.cookie('count', count);
 
