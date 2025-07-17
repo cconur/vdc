@@ -842,9 +842,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-$.removeCookie('events');
-$.removeCookie('count');
-$.removeCookie('visita');
+//$.removeCookie('events');
+//$.removeCookie('count');
+//$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -921,7 +921,6 @@ $.removeCookie('visita');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             console.log(eventsValue);
             $.cookie('events', eventsValue);
-            count = parseInt(count) + 1;
             console.log(count);
             $.cookie('count', count);
 
@@ -931,23 +930,27 @@ $.removeCookie('visita');
             $.cookie('visita', itinerario);
             console.log($.cookie('visita'));
 
+            count = parseInt(count) + 1;
             }
 
             else {
+            console.log("camino 2: cookie ya creada");
             let count = $.cookie('count');
             let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
             $.cookie('events', eventsValue);
-            count = parseFloat(count) + 1;
             $.cookie('count', count);
             console.log(eventsValue);
-            let itinerario = $.cookie('visita');
 
+            let itinerario = $.cookie('visita');
             let visita = Object.assign(itinerario, { count: { hora:  time, pieza: param1Value} });
+
+            console.log(itinerario);
             console.log(visita);
             $.cookie('visita', visita);
             console.log($.cookie('visita'));
-            }
+            count = parseFloat(count) + 1;
+        }
             
             //console.log($.cookie('count'));
             //console.log($.cookie('events'));
