@@ -324,7 +324,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <video controls="controls" preload="none" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
+                        <video controls preload="none" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
                         <source
                             src="${rowVariant.url}?alt=media&key=${apiKey}" 
                             type="video/mp4"
@@ -391,7 +391,7 @@ fetch(myRequest)
                         
                         <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <audio controls="controls" preload="none" class="audio-thumbnail" id="audio" title="${rowVariant.name}"> 
+                        <audio controls="controls" preload ="none" class="audio-thumbnail" id="audio" title="${rowVariant.name}"> 
                         <source
                             src="${rowVariant.url}?alt=media&key=${apiKey}" 
                             type="audio/mp3"
@@ -804,9 +804,20 @@ $(document).ready(function() {
         //$(this).css({'transform' : 'rotate('+ degrees +'deg)'});
         $(this).toggleClass("active");
         $(this).parent().next(".mediaContent").toggle('1000');
+
+        //Inyecto el API key en la pieza a reproducir, audio o video. Para no generar concurrencia de peticiones
+        //$(this).parent().next(".mediaContent").find("source").attr('src' , $(this).parent().next(".mediaContent").find("source").attr('src') + apiKey);
+        //console.log("inyecto API key");
+
         $(this).find('.show-details').text(function(i, v){
              return v === 'Ocultar' ? 'Ver' : 'Ocultar'
          })
+
+
+
+
+            //$(this).parent().next('.mediaButton').find("source").attr('src') + apiKey;
+
         //$(this).find('.bi-arrow-right').addClass('rotated');
     });
 });
@@ -842,9 +853,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -859,7 +870,7 @@ $(document).ready(function() {
         $('.under-construction').hide();
         //$('.ficha-pieza').hide();
         $('.titulo-pieza-qr').hide();
-        $('.mediaButton.audio .btn').click();
+        $('.'+param1Value+' .mediaButton.audio .btn').click();
         $('.journey-button').show('1000');
         $('.filter').hide();
         $('.filter.'+param1Value).show('1000');
@@ -930,7 +941,7 @@ $(document).ready(function() {
             $.cookie('visita', visita);
             console.log($.cookie('visita'));
 
-            count = parseInt(count) + 1;
+            count = parseFloat(count) + 1;
             }
 
             else {
@@ -946,11 +957,12 @@ $(document).ready(function() {
             let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
 
             console.log(itinerario);
+            console.log(visita);
 
             $.cookie('visita', visita);
             console.log($.cookie('visita'));
 
-            count = parseInt(count) + 1;
+            count = parseFloat(count) + 1;
         }
             
             //console.log($.cookie('count'));
