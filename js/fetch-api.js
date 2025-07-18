@@ -891,6 +891,7 @@ $.removeCookie('visita');
 
             console.log($.cookie('count'));
             console.log($.cookie('events'));
+            console.log($.cookie('visita'));
 
 
 // Añado la opción de ver toda la web si estás en la sección 8
@@ -928,20 +929,15 @@ $.removeCookie('visita');
    
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
-
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
             let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
 
-            count = parseFloat(count) + 1;
-            console.log(eventsValue);
-            $.cookie('events', eventsValue);
-            console.log(count);
-            $.cookie('count', count);
-            console.log(visita);
-            $.cookie('visita', visita);
-            console.log($.cookie('visita'));
+            count = parseInt(count) + 1;
 
+            $.cookie('events', eventsValue);
+            $.cookie('count', count);
+            $.cookie('visita', visita);
             }
 
             else {
@@ -953,16 +949,11 @@ $.removeCookie('visita');
             let itinerario = $.cookie('visita');
             let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
 
-            count = parseFloat(count) + 1;
+            count = parseInt(count) + 1;
 
             $.cookie('events', eventsValue);
             $.cookie('count', count);
             $.cookie('visita', visita);
-
-            console.log(eventsValue);
-            console.log(itinerario);
-            console.log(visita);
-            console.log($.cookie('visita'));
         }
             
             //console.log($.cookie('count'));
