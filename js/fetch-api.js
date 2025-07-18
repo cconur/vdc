@@ -853,9 +853,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -923,7 +923,7 @@ $(document).ready(function() {
 
             $.cookie('events', '', {expires: days, secure: true});
             $.cookie('count', countValue, {expires: days, secure: true});
-            $.cookie('visita', '', {expires: days, secure: true});
+            $.cookie('visita', [], {expires: days, secure: true});
    
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
@@ -949,7 +949,7 @@ $(document).ready(function() {
             let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
-            let itinerario = $.cookie('visita');
+            let itinerario = [$.cookie('visita')];
 
             itinerario.push("vistia ("+count+"): "+time+" | "+param1Value);
 
