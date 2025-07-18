@@ -842,9 +842,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
