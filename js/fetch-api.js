@@ -927,7 +927,7 @@ $.removeCookie('visita');
 
             let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
             console.log(visita);
-            $.cookie('visita', itinerario);
+            $.cookie('visita', visita);
             console.log($.cookie('visita'));
 
             count = parseInt(count) + 1;
@@ -947,7 +947,7 @@ $.removeCookie('visita');
 
             console.log(itinerario);
 
-            $.cookie('visita', itinerario);
+            $.cookie('visita', visita);
             console.log($.cookie('visita'));
 
             count = parseInt(count) + 1;
