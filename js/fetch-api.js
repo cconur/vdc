@@ -853,9 +853,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -909,8 +909,6 @@ $(document).ready(function() {
             if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
             let countValue = 1;
 
-            let itinerario = {};
-
             var start = new Date();
             var end = new Date("14 Sep 2025");// Finaliza la exposición
 
@@ -925,13 +923,15 @@ $(document).ready(function() {
 
             $.cookie('events', '', {expires: days, secure: true});
             $.cookie('count', countValue, {expires: days, secure: true});
-            $.cookie('visita', itinerario, {expires: days, secure: true});
+            $.cookie('visita', '', {expires: days, secure: true});
    
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
-            Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+            let itinerario = ["vistia ("+count+"): hora= "+time+" pieza= "+param1Value];
+
+            //Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
 
 
             count = parseInt(count) + 1;
@@ -939,6 +939,8 @@ $(document).ready(function() {
             $.cookie('events', eventsValue);
             $.cookie('count', count);
             $.cookie('visita', itinerario);
+            console.log(itinerario);
+            console.log($.cookie('visita'));
             }
 
             else {
@@ -949,7 +951,7 @@ $(document).ready(function() {
 
             let itinerario = $.cookie('visita');
 
-            Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+            itinerario.push("vistia ("+count+"): hora= "+time+" pieza= "+param1Value);
 
             count = parseInt(count) + 1;
 
@@ -957,6 +959,7 @@ $(document).ready(function() {
             $.cookie('count', count);
             $.cookie('visita', itinerario);
             console.log(itinerario);
+            console.log($.cookie('visita'));
         }
             
             //console.log($.cookie('count'));
