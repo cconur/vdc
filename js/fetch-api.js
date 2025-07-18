@@ -853,9 +853,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -923,21 +923,22 @@ $(document).ready(function() {
             console.log("Fin :"+end);
             console.log("Dias :"+days);
 
-            $.cookie('events', '', {expires: 3, secure: true});
-            $.cookie('count', countValue, {expires: 3, secure: true});
-            $.cookie('visita', itinerario, {expires: 3, secure: true});
+            $.cookie('events', '', {expires: days, secure: true});
+            $.cookie('count', countValue, {expires: days, secure: true});
+            $.cookie('visita', itinerario, {expires: days, secure: true});
    
             let count = $.cookie('count');
             let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
-            let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+            Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+
 
             count = parseInt(count) + 1;
 
             $.cookie('events', eventsValue);
             $.cookie('count', count);
-            $.cookie('visita', visita);
+            $.cookie('visita', itinerario);
             }
 
             else {
@@ -947,13 +948,14 @@ $(document).ready(function() {
             $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
             let itinerario = $.cookie('visita');
-            let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+
+            Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
 
             count = parseInt(count) + 1;
 
             $.cookie('events', eventsValue);
             $.cookie('count', count);
-            $.cookie('visita', visita);
+            $.cookie('visita', itinerario);
         }
             
             //console.log($.cookie('count'));
