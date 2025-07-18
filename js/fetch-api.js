@@ -943,13 +943,14 @@ $(document).ready(function() {
             console.log(eventsValue);
 
             let itinerario = $.cookie('visita');
-            let visita = Object.assign(itinerario, { count: { hora:  time, pieza: param1Value} });
+            let visita = Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
 
             console.log(itinerario);
-            console.log(visita);
-            $.cookie('visita', visita);
+
+            $.cookie('visita', itinerario);
             console.log($.cookie('visita'));
-            count = parseFloat(count) + 1;
+
+            count = parseInt(count) + 1;
         }
             
             //console.log($.cookie('count'));
