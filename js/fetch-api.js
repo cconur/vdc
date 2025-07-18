@@ -956,6 +956,7 @@ $(document).ready(function() {
             $.cookie('events', eventsValue);
             $.cookie('count', count);
             $.cookie('visita', itinerario);
+            console.log(itinerario);
         }
             
             //console.log($.cookie('count'));
