@@ -323,7 +323,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <div class="d-grid gap-2"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="video-${idPieza}" style="background-color: #0d6efd; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
+                        <div class="d-grid gap-2 mt-1"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="video-${idPieza}" style="background-color: #0d6efd; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
                         `;
                         //console.log(newVideo);
             //recuento de archivos media           
@@ -351,7 +351,7 @@ fetch(myRequest)
                         </div>
                         <div class="row mediaContent video mb-4" id="${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
-                        <video controls="controls" preload="none" class="video-thumbnail rounded-3" id="mediaPlayer-video-${idPieza}" title="video player" style="display:none;"> 
+                        <video controls="controls" preload="none" class="video-thumbnail mediaPlayer rounded-3" id="mediaPlayer-video-${idPieza}" title="video player" style="display:none;"> 
                         Esta web no soporta este formato de video.
                         </video>
                         </div>
@@ -386,7 +386,7 @@ fetch(myRequest)
                         newAudio.innerHTML = `
                         <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <div class="d-grid gap-2"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="audio-${idPieza}" style="background-color: #ffdbbfff; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
+                        <div class="d-grid gap-2 mt-1"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="audio-${idPieza}" style="background-color: #db792c; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
                         `;
 
                         //console.log(newAudio);
@@ -443,7 +443,7 @@ fetch(myRequest)
                         </div>
                         <div class="row mediaContent audio mb-4" id="mediaContent-${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
-                        <audio controls="controls" preload ="none" class="audio-thumbnail" id="mediaPlayer-audio-${idPieza}" title="audio player" style="display:none;"> 
+                        <audio controls="controls" preload ="none" class="audio-thumbnail mediaPlayer" id="mediaPlayer-audio-${idPieza}" title="audio player" style="display:none;"> 
                             Esta web no soporta este formato de audio.
                         </audio>
                         </div>
@@ -798,15 +798,33 @@ $(document).ready(function() {
 
 
     $(".mediaButton .btn").click(function () {
-
+        var mediaPlayer = $('.mediaPlayer');
         //$(this).css({'transform' : 'rotate('+ degrees +'deg)'});
         $(this).toggleClass("active");
-        $(this).parent().next(".mediaContent").toggle('1000');
-        
 
-        $(this).find('.show-details').text(function(i, v){
-             return v === 'Ocultar' ? 'Ver' : 'Ocultar'
-         })
+            if ($(this).hasClass("active"))
+            {  
+                $('.mediaContent').hide('3000');    
+                $('.show-details').text('Ver');
+                $('.mediaButton .btn').removeClass('active');
+                $('.mediaPlayButton').show();
+                mediaPlayer.hide();
+
+                mediaPlayer.each(function(){
+                this.pause(); // Stop playing
+                this.currentTime = 0; // Reset time
+                });
+
+                $(this).parent().next(".mediaContent").show('1000');    
+                $(this).find('.show-details').text('Ocultar');
+                $(this).addClass('active');
+            }
+            else
+            {
+                $(this).parent().next(".mediaContent").hide('3000');
+                $(this).find('.show-details').text('Ver');
+                $(this).removeClass('active');
+            }
 
     });
 
@@ -814,7 +832,7 @@ $(document).ready(function() {
         idPieza = $(this).attr('id');
         console.log("idPieza: "+idPieza);
 
-        $(this).toggleClass("active");
+        //$(this).toggleClass("active");
         //$(this).parent().next(".mediaContent").toggle('1000');
 
         var player = document.getElementById('mediaPlayer-'+idPieza);
@@ -829,25 +847,15 @@ $(document).ready(function() {
         console.log($('#mediaPlayer-'+idPieza+' source').length);
         if ($('#mediaPlayer-'+idPieza+' source').length == 0 ) {
         player.appendChild(playerSource);
+        //call this to just preload the audio without playing
+        player.load();
         }
         //player.autoplay = true; //call this to play the song right away
-        player.load(); //call this to just preload the audio without playing
-        //player.play();
-
-        if($(this).hasClass('active')){
-            $(this).text('Pausar');
-            $(this).hide();
-            $('#mediaPlayer-'+idPieza).show('1000');
-            //$(this).find('.bi').addClass('bi-pause-fill');
-            //$(this).find('.bi').removeClass('bi-play-fill');
-            player.play();
-        } else {
-            $(this).text('Reproducir');
-            $(this).show();
-            //$(this).find('.bi').addClass('bi-play-fill');
-            //$(this).find('.bi').removeClass('bi-pause-fill');
-            player.pause();
-        }
+        $(this).hide();
+        $('#mediaPlayer-'+idPieza).show('1000');
+        //$(this).find('.bi').addClass('bi-pause-fill');
+        //$(this).find('.bi').removeClass('bi-play-fill');
+        player.play();
 
     });
 
@@ -886,9 +894,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-$.removeCookie('events');
-$.removeCookie('count');
-$.removeCookie('visita');
+//$.removeCookie('events');
+//$.removeCookie('count');
+//$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
