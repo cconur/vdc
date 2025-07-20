@@ -848,19 +848,16 @@ $(document).ready(function() {
         if ($('#mediaPlayer-'+idPieza+' source').length == 0 ) {
         player.appendChild(playerSource);
         //call this to just preload the audio without playing
-        player.load();
         }
         //player.autoplay = true; //call this to play the song right away
         $(this).hide();
         $('#mediaPlayer-'+idPieza).show('1000');
         //$(this).find('.bi').addClass('bi-pause-fill');
         //$(this).find('.bi').removeClass('bi-play-fill');
+        player.load();
         player.play();
 
     });
-
-
-
 
 });
 
@@ -893,7 +890,7 @@ $(document).ready(function() {
     const param1Value = urlParams.get('param1');
     // const param2Value = urlParams.get('param2');
 
-
+// Reseteo las cookies
 //$.removeCookie('events');
 //$.removeCookie('count');
 //$.removeCookie('visita');
