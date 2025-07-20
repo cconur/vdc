@@ -4,6 +4,7 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
+
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -281,7 +282,7 @@ fetch(myRequest)
             newDiv.innerHTML += `
                         <div class="row mediaButton image mb-4">
                             <button class="btn d-flex">
-                            <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-images"></i>z/span>Imagen/es</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
+                            <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-images"></i></span>Imagen/es</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totaMediaTypes}</div>
                             </button>
                         </div>
                         <div class="row mediaContent image mb-4" id="${idPieza}" style="display: none;">
@@ -292,11 +293,11 @@ fetch(myRequest)
                             <div class="carousel-inner">
                                 ${otherVariants.innerHTML}
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages.${idPieza}" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages-${idPieza}" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselImages.${idPieza}" data-bs-slide="next">
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselImages-${idPieza}" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                             </button>
@@ -802,6 +803,13 @@ $(document).ready(function() {
         //$(this).css({'transform' : 'rotate('+ degrees +'deg)'});
         $(this).toggleClass("active");
 
+        //Paro todas las reproducciones
+        mediaPlayer.each(function(){
+        this.pause(); // Stop playing
+        this.currentTime = 0; // Reset time
+        });
+
+
             if ($(this).hasClass("active"))
             {  
                 $('.mediaContent').hide('3000');    
@@ -809,11 +817,6 @@ $(document).ready(function() {
                 $('.mediaButton .btn').removeClass('active');
                 $('.mediaPlayButton').show();
                 mediaPlayer.hide();
-
-                mediaPlayer.each(function(){
-                this.pause(); // Stop playing
-                this.currentTime = 0; // Reset time
-                });
 
                 $(this).parent().next(".mediaContent").show('1000');    
                 $(this).find('.show-details').text('Ocultar');
