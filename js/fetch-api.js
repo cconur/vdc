@@ -175,15 +175,15 @@ fetch(myRequest)
 
             newDiv.innerHTML = `
                             <div class="col text-center titulo-pieza-qr" style="display:none"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
-                            <div class="row mt-4 mb-2 ficha-pieza">
+                            <div class="row mt-3 mb-2 ficha-pieza">
                                 <!-- Imagen por defecto -->
-                                <div class="col-md-4 mb-2">
+                                <div class="col-md-4 mb-3 px-1 pt-1">
                                     <div class="default-image">
-                                        <img class="img-fluid img-main object-fit-fill" src="${rowInfo.imgDefecto}">
+                                        <img class="img-fluid img-main object-fit-fill rounded-3" src="${rowInfo.imgDefecto}">
                                     </div>
                                 </div>
                                 <!-- Detalles de la pieza -->
-                                <div class="col-md-8">
+                                <div class="col-md-8 px-0">
                                     <div class="row tittle-pieza">
                                         <div class="col-sm"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                                         <button class="add btn project-add mb-2 col-sm-auto text-center px-3" data-toggle="tooltip" data-placement="bottom" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg" title="Al puslar se añadirá en el formulario de contacto"><i class="bi bi-pin-angle"></i></button>
@@ -208,7 +208,7 @@ fetch(myRequest)
                             if (rowInfo.image !== undefined || rowInfo.audio !== undefined || rowInfo.video !== undefined || rowInfo.application !== undefined) {
                                 newDiv.innerHTML += `
                                     <div class="row more-info" id="more-info">
-                                        <h2 class="h5 text-wrap"><i class="fa-solid me-2 fa-circle-info"></i>Información adicional de esta pieza:</h2>
+                                        <h2 class="h5 text-wrap ps-0"><i class="fa-solid me-2 fa-circle-info"></i>Información adicional de esta pieza:</h2>
                                     </div>
                             `;
                 }
@@ -324,7 +324,8 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <div class="d-grid gap-2 mt-1"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="video-${idPieza}" style="background-color: #0d6efd; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
+                        <span class="badge rounded-pill text-bg-warning playing" style="display:none;"><i class="fa-solid fa-gear fa-spin me-2"></i>... en reproducción ahora</span>
+                        <div class="d-grid gap-2 mt-1"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="video-${idPieza}" style="background-color: #0d6efd; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-3"></i>Reproducir</button></div>
                         `;
                         //console.log(newVideo);
             //recuento de archivos media           
@@ -387,7 +388,8 @@ fetch(myRequest)
                         newAudio.innerHTML = `
                         <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <div class="d-grid gap-2 mt-1"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="audio-${idPieza}" style="background-color: #db792c; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
+                        <span class="badge rounded-pill text-bg-warning playing" style="display:none;"><i class="fa-solid fa-gear fa-spin me-2"></i>... en reproducción ahora</span>
+                        <div class="d-grid gap-2 mt-1"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="audio-${idPieza}" style="background-color: #db792c; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-3"></i>Reproducir</button></div>
                         `;
 
                         //console.log(newAudio);
@@ -800,6 +802,7 @@ $(document).ready(function() {
 
     $(".mediaButton .btn").click(function () {
         var mediaPlayer = $('.mediaPlayer');
+        $('.playing').hide();
         //$(this).css({'transform' : 'rotate('+ degrees +'deg)'});
         $(this).toggleClass("active");
 
@@ -834,6 +837,7 @@ $(document).ready(function() {
     $(".mediaPlayButton").click(function () {
         idPieza = $(this).attr('id');
         console.log("idPieza: "+idPieza);
+        $('.playing').hide();
 
         //$(this).toggleClass("active");
         //$(this).parent().next(".mediaContent").toggle('1000');
@@ -853,7 +857,9 @@ $(document).ready(function() {
         //call this to just preload the audio without playing
         }
         //player.autoplay = true; //call this to play the song right away
-        $(this).hide();
+        $(this).hide('3000');
+        $(this).parent().parent().find('.playing').show('1000');
+
         $('#mediaPlayer-'+idPieza).show('1000');
         //$(this).find('.bi').addClass('bi-pause-fill');
         //$(this).find('.bi').removeClass('bi-play-fill');
