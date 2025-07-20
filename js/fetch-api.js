@@ -4,7 +4,6 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
-
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -324,13 +323,7 @@ fetch(myRequest)
                         newVideo.innerHTML = `
                         <span class="badge rounded-pill text-bg-success">Video</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <video controls preload="none" class="video-thumbnail rounded-3" id="video" title="${rowVariant.name}"> 
-                        <source
-                            src="${rowVariant.url}?alt=media&key=${apiKey}" 
-                            type="video/mp4"
-                        >
-                        </video>
-
+                        <div class="d-grid gap-2"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="video-${idPieza}" style="background-color: #0d6efd; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
                         `;
                         //console.log(newVideo);
             //recuento de archivos media           
@@ -358,6 +351,9 @@ fetch(myRequest)
                         </div>
                         <div class="row mediaContent video mb-4" id="${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
+                        <video controls="controls" preload="none" class="video-thumbnail rounded-3" id="mediaPlayer-video-${idPieza}" title="video player" style="display:none;"> 
+                        Esta web no soporta este formato de video.
+                        </video>
                         </div>
                         `;
         }
@@ -388,16 +384,11 @@ fetch(myRequest)
                         newAudio.className = "more-audios lang";
                         newAudio.classList.add(audioLangClass);
                         newAudio.innerHTML = `
-                        
                         <span class="badge rounded-pill text-bg-danger"><span class="fi me-2 fi-${audioLang}"></span>Audio</span>
                         <span class="badge rounded-pill text-bg-secondary text-wrap">${rowVariant.name}</span>
-                        <audio controls="controls" preload ="none" class="audio-thumbnail" id="audio" title="${rowVariant.name}"> 
-                        <source
-                            src="${rowVariant.url}?alt=media&key=${apiKey}" 
-                            type="audio/mp3"
-                        >
-                        </audio>
+                        <div class="d-grid gap-2"><button data-value="${rowVariant.url}?alt=media&key=" class="mediaPlayButton btn btn-secondary btn-lg madiaUrl-${idPieza}" id="audio-${idPieza}" style="background-color: #ffdbbfff; color:white"><i class="play-pause fa-beat-fade fa-solid fa-play fa-lg me-2"></i>Reproducir</button></div>
                         `;
+
                         //console.log(newAudio);
             //recuento de archivos media           
             apptypes.push(rowVariant);
@@ -446,12 +437,15 @@ fetch(myRequest)
             
             newDiv.innerHTML += `
                         <div class="row mediaButton audio mb-4">
-                            <button class="btn d-flex">
+                            <button class="btn d-flex" id="${idPieza}">
                             <div class="flex-fill text-start w-50 align-middle py-1 me-2"><span class="ms-0 icon-media me-2"><i class="bi bi-headphones"></i></span>Audioguía/s</div><span class="flex-fill show-details ml-3">Ver</span><div class="ms-2 counter number-circle">${totalAudioLang}</div>
                             </button>
                         </div>
-                        <div class="row mediaContent audio mb-4" id="${idPieza}" style="display: none;">
+                        <div class="row mediaContent audio mb-4" id="mediaContent-${idPieza}" style="display: none;">
                             ${otherVariants.innerHTML}
+                        <audio controls="controls" preload ="none" class="audio-thumbnail" id="mediaPlayer-audio-${idPieza}" title="audio player" style="display:none;"> 
+                            Esta web no soporta este formato de audio.
+                        </audio>
                         </div>
                         `;
         }
@@ -652,16 +646,19 @@ $(document).ready(function(){
         console.log('camino 1');
         $('.lang').hide();
         $('.' + userLangCode).show();
+        $('.' + userLangCode).addClass('shown');
     } else if (userLangCode == "eu" || userLangCode == "ca" || userLangCode == "gl") {
         console.log('camino 2');
         $('.lang').hide();
         $('.es').show();
+        $('.es').addClass('shown');
     } else {
     // si no hay match entre el nav.lang y el contenido media de los 4 idiomas, dejo en ingles, lo busco en la clase
     console.log('camino 3');
         $('.lang').hide();
         $('.' + userLangCode).show();
         $('.en').show();
+        $('.en').addClass('shown');
     }
     // Pongo la bandera del idioma detectado;
     let userLangCodeFlag = "";
@@ -801,25 +798,62 @@ $(document).ready(function() {
 
 
     $(".mediaButton .btn").click(function () {
+
         //$(this).css({'transform' : 'rotate('+ degrees +'deg)'});
         $(this).toggleClass("active");
         $(this).parent().next(".mediaContent").toggle('1000');
-
-        //Inyecto el API key en la pieza a reproducir, audio o video. Para no generar concurrencia de peticiones
-        //$(this).parent().next(".mediaContent").find("source").attr('src' , $(this).parent().next(".mediaContent").find("source").attr('src') + apiKey);
-        //console.log("inyecto API key");
+        
 
         $(this).find('.show-details').text(function(i, v){
              return v === 'Ocultar' ? 'Ver' : 'Ocultar'
          })
 
-
-
-
-            //$(this).parent().next('.mediaButton').find("source").attr('src') + apiKey;
-
-        //$(this).find('.bi-arrow-right').addClass('rotated');
     });
+
+    $(".mediaPlayButton").click(function () {
+        idPieza = $(this).attr('id');
+        console.log("idPieza: "+idPieza);
+
+        $(this).toggleClass("active");
+        //$(this).parent().next(".mediaContent").toggle('1000');
+
+        var player = document.getElementById('mediaPlayer-'+idPieza);
+        var playerSource = document.createElement('source');
+
+        var source = $(this).attr("data-value");
+        //Inyecto el API key en la pieza a reproducir, audio o video. Para no generar concurrencia de peticiones
+        console.log("inyecto API key");
+        playerSource.setAttribute('src', source+apiKey);
+        //playerSource.setAttribute('type', 'video/mp4');
+
+        console.log($('#mediaPlayer-'+idPieza+' source').length);
+        if ($('#mediaPlayer-'+idPieza+' source').length == 0 ) {
+        player.appendChild(playerSource);
+        }
+        //player.autoplay = true; //call this to play the song right away
+        player.load(); //call this to just preload the audio without playing
+        //player.play();
+
+        if($(this).hasClass('active')){
+            $(this).text('Pausar');
+            $(this).hide();
+            $('#mediaPlayer-'+idPieza).show('1000');
+            //$(this).find('.bi').addClass('bi-pause-fill');
+            //$(this).find('.bi').removeClass('bi-play-fill');
+            player.play();
+        } else {
+            $(this).text('Reproducir');
+            $(this).show();
+            //$(this).find('.bi').addClass('bi-play-fill');
+            //$(this).find('.bi').removeClass('bi-pause-fill');
+            player.pause();
+        }
+
+    });
+
+
+
+
 });
 
 $(document).ready(function(){
@@ -842,7 +876,6 @@ $(document).ready(function(){
 });
 
 
-
 $(document).ready(function() {
     // Asumeiendo una URL con esta estructura: http://url.com/?param1=value1&param2=value2 -->
     // Get the URL parameters
@@ -853,9 +886,9 @@ $(document).ready(function() {
     // const param2Value = urlParams.get('param2');
 
 
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
+$.removeCookie('events');
+$.removeCookie('count');
+$.removeCookie('visita');
 
 
     console.log(urlParams.has('param1')); // true
@@ -938,7 +971,7 @@ $(document).ready(function() {
 
             $.cookie('events', eventsValue);
             $.cookie('count', count);
-            $.cookie('visita', itinerario);
+            $.cookie('visita', [itinerario]);
             console.log(itinerario);
             console.log($.cookie('visita'));
             }
@@ -957,7 +990,7 @@ $(document).ready(function() {
 
             $.cookie('events', eventsValue);
             $.cookie('count', count);
-            $.cookie('visita', itinerario);
+            $.cookie('visita', [itinerario]);
             console.log(itinerario);
             console.log($.cookie('visita'));
         }
