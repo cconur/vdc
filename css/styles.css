@@ -11672,9 +11672,10 @@ hr.solid {
 }
 
 .video-thumbnail {
-  width: 100%!important;
-  height: 100%!important;
-  object-fit: cover!important;
+object-fit: cover!important;
+aspect-ratio: 16 / 9;
+border-radius:20px!important;
+margin: 10px 0;
 }
 
 .file-thumbnail {
@@ -11927,9 +11928,6 @@ html.glightbox-open {
   aspect-ratio: 16 / 9;
 }
 
-.more-videos {
-  aspect-ratio: 16 / 9;
-}
 
 .more-files {
   aspect-ratio: 1 / 1;
