@@ -11335,10 +11335,15 @@ header.masthead h1, header.masthead .h1 {
 button[data-filter="all"]{
 
   font-weight: 800;
-  background-color: #b1afaf;
+  background-color: #2196F3;
   border:none;
   color: white;
   text-transform:uppercase;
+}
+
+.btn.search {
+  background-color:orange;
+  color:white;
 }
 
 .mediaButton .btn {
@@ -11614,7 +11619,7 @@ button.add.active {
   color:#626262;
 }
 
-#filter-secciones .btn::first-letter {
+#filter-secciones .btn {
   text-transform: uppercase;
 }
 
