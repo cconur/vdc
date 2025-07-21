@@ -178,13 +178,13 @@ fetch(myRequest)
                             <div class="col text-center titulo-pieza-qr" style="display:none"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                             <div class="row mt-3 mb-2 ficha-pieza">
                                 <!-- Imagen por defecto -->
-                                <div class="col-md-4 mb-3 px-1 imagen-pieza">
+                                <div class="col-md-4 mb-3 ps-1 imagen-pieza">
                                     <div class="default-image">
                                         <img class="img-fluid img-main object-fit-fill rounded-4" src="${rowInfo.imgDefecto}">
                                     </div>
                                 </div>
                                 <!-- Detalles de la pieza -->
-                                <div class="col-md-8 pe-0 detalles-pieza">
+                                <div class="col-md-8 px-0 detalles-pieza">
                                     <div class="row tittle-pieza px-0">
                                         <div class="col-sm"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                                         <button class="add btn project-add mb-2 col-sm-auto text-center px-3" data-toggle="tooltip" data-placement="bottom" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg" title="Al puslar se añadirá en el formulario de contacto"><i class="bi bi-pin-angle"></i></button>
@@ -1101,7 +1101,30 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function(){
+//obtengo 
+var piezas = [];
+    $('.timeline-1').each(function () {
+        
+        var pieza = $(this).find('.pieza-visitada').text();
+        console.log(pieza);
+        piezas.push(pieza)
 
+    });
+    console.log('todas las piezas: '+piezas);
+    var piezasUnicas = jQuery.unique( piezas );
+    console.log('piezas unicas: '+piezasUnicas);
+
+    var countPiezas = {};
+    for (var z = 0; z < piezas.length; z++) {
+        countPiezas[piezas[z]] = 1 + (countPiezas[piezas[z]] || 0);
+    }
+    console.log(countPiezas);
+
+
+
+
+});
 
 
 
