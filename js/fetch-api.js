@@ -4,6 +4,7 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
+
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -853,8 +854,8 @@ $(document).ready(function() {
         console.log(player.tagName);
         playerSource.setAttribute('src', source+apiKey);
 
-        if (player.tagName == 'VIDEO') {playerSource.setAttribute('type', 'video/mp4');}
-        if (player.tagName == 'AUDIO') {playerSource.setAttribute('type', 'audio/mp3');}
+        //if (player.tagName == 'VIDEO') {playerSource.setAttribute('type', 'video/mp4');}
+        //if (player.tagName == 'AUDIO') {playerSource.setAttribute('type', 'audio/mp3');}
 
         console.log($('#mediaPlayer-'+idPieza+' source').length);
         if ($('#mediaPlayer-'+idPieza+' source').length == 0 ) {
@@ -1052,13 +1053,12 @@ $(document).ready(function() {
                 //console.log(itinerario);
         }
 
-        if (idUrlsParam == "pruebas") {
+        else if (idUrlsParam == "pruebas") {
             console.log("ok");
         // parámetro para pruebas, cargo toda la web
         }
 
         else {$("#portfolio").remove();}
-        
         
     }
 
