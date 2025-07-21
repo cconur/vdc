@@ -983,7 +983,7 @@ $(document).ready(function() {
                 if(seccion == "s08") {
                     var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
                     $("#portfolio").append(restore);
-                };
+                }
 
                 const event = new Date();
                 let time = event.toLocaleString();
@@ -1011,7 +1011,7 @@ $(document).ready(function() {
                 $.cookie('visita', [], {expires: days, secure: true});
     
                 let count = $.cookie('count');
-                let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
+                let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">'+param1Value+'</span></p></li>');
                 $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
                 let itinerario = ["vistia ("+count+"): "+time+" | "+param1Value];
@@ -1031,7 +1031,7 @@ $(document).ready(function() {
                 else {
                 console.log("camino 2: cookie ya creada");
                 let count = $.cookie('count');
-                let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
+                let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">'+param1Value+'</span></p></li>');
                 $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
                 let itinerario = [$.cookie('visita')];
@@ -1052,9 +1052,13 @@ $(document).ready(function() {
                 //console.log(itinerario);
         }
 
-        else if (idUrlsParam == "pruebas") {
+        if (idUrlsParam == "pruebas") {
+            console.log("ok");
         // parámetro para pruebas, cargo toda la web
-        };
+        }
+
+        else {$("#portfolio").remove();}
+        
         
     }
 
@@ -1064,7 +1068,7 @@ $(document).ready(function() {
         // Url sin params, elemino toda la exposicion
         $("#portfolio").remove();
 
-    };
+    }
 
     // console.log('param2Value:', param2Value);
     
@@ -1096,6 +1100,11 @@ $(document).ready(function() {
 
     });
 });
+
+
+
+
+
 
 
 })
