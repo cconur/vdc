@@ -4,7 +4,6 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
-
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -91,11 +90,11 @@ fetch(myRequest)
         }
 
 
-        // Conseguir el valor de todas las secciones / espacios
+        // Conseguir el valor de todas las secciones
         let arr = [];
         for(let i = 0; i < result.length; i++){
         let rowInfo = result[i];
-        let resultsSecciones = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();
+        let resultsSecciones = rowInfo.secDesc.replace(re, m => chars[m]).toLowerCase();
             if (resultsSecciones !== "") {
                 arr.push(resultsSecciones);
             }
@@ -130,11 +129,12 @@ fetch(myRequest)
             newDiv.className = "row bg-white filter portfolio-pieza";
             //console.log("NPieza :"+rowInfo.nPieza);
             
-            if (rowInfo.seccion !== undefined) {var idSeccion = rowInfo.seccion.replace(re, m => chars[m]).toLowerCase();}
+            if (rowInfo.secDesc !== undefined) {var idSeccion = rowInfo.secDesc.replace(re, m => chars[m]).toLowerCase();}
 
             if (rowInfo.nPieza !== undefined) {var idPieza = rowInfo.nPieza.replace(re, m => chars[m]).toLowerCase()}
             else {continue};            
             
+            // Añado la sección para poder filtrar
             if (idPieza !== "" && idSeccion !== "") {newDiv.classList.add(idPieza); newDiv.classList.add(idSeccion)};
 
             if (idPieza == "portada") {
@@ -177,22 +177,22 @@ fetch(myRequest)
                             <div class="col text-center titulo-pieza-qr" style="display:none"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                             <div class="row mt-3 mb-2 ficha-pieza">
                                 <!-- Imagen por defecto -->
-                                <div class="col-md-4 mb-3 px-1 pt-1">
+                                <div class="col-md-4 mb-3 px-1 imagen-pieza">
                                     <div class="default-image">
-                                        <img class="img-fluid img-main object-fit-fill rounded-3" src="${rowInfo.imgDefecto}">
+                                        <img class="img-fluid img-main object-fit-fill rounded-4" src="${rowInfo.imgDefecto}">
                                     </div>
                                 </div>
                                 <!-- Detalles de la pieza -->
-                                <div class="col-md-8 px-0">
-                                    <div class="row tittle-pieza">
+                                <div class="col-md-8 pe-0 detalles-pieza">
+                                    <div class="row tittle-pieza px-0">
                                         <div class="col-sm"><h1 class="h2 mb-3">${rowInfo.piezaDesc}</h1></div>
                                         <button class="add btn project-add mb-2 col-sm-auto text-center px-3" data-toggle="tooltip" data-placement="bottom" data-bs-toggle="modal" data-bs-target=".bd-contact-modal-lg" title="Al puslar se añadirá en el formulario de contacto"><i class="bi bi-pin-angle"></i></button>
                                     </div>
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.seccion}</li>
+                                            <li class="breadcrumb-item active" aria-current="page">${rowInfo.secDesc}</li>
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.espacio}</li>
-                                            <li class="breadcrumb-item active" aria-current="page">${rowInfo.soporte}</li>
                                             <li class="breadcrumb-item active" aria-current="page">${rowInfo.nPieza}</li>
                                         </ol>
                                     </nav>  
@@ -581,9 +581,11 @@ fetch(myRequest)
         const newDiv = document.createElement("button");
         newDiv.className = "btn btn-default filter-button py-2 px-3";
 
-        var idSeccion = rowInfo.replace(re, m => chars[m]).toLowerCase();
+//        var idSeccion = rowInfo.replace(re, m => chars[m]).toLowerCase();
+        var idSeccion = rowInfo;
+
         if (idSeccion !== "") {newDiv.dataset.filter = idSeccion};
-        newDiv.innerHTML = rowInfo.replace("-", " ");
+        newDiv.innerHTML = rowInfo.replaceAll("-", " ");
         myFilter.appendChild(newDiv);
     }
     const newButton = document.createElement("button");
@@ -848,8 +850,11 @@ $(document).ready(function() {
         var source = $(this).attr("data-value");
         //Inyecto el API key en la pieza a reproducir, audio o video. Para no generar concurrencia de peticiones
         console.log("inyecto API key");
+        console.log(player.tagName);
         playerSource.setAttribute('src', source+apiKey);
-        //playerSource.setAttribute('type', 'video/mp4');
+
+        if (player.tagName == 'VIDEO') {playerSource.setAttribute('type', 'video/mp4');}
+        if (player.tagName == 'AUDIO') {playerSource.setAttribute('type', 'audio/mp3');}
 
         console.log($('#mediaPlayer-'+idPieza+' source').length);
         if ($('#mediaPlayer-'+idPieza+' source').length == 0 ) {
@@ -890,6 +895,35 @@ $(document).ready(function(){
 });
 
 
+
+$(document).ready(function(){
+//oculto en la ficha la imagen cuando no hay src
+    $('.imagen-pieza img').each(function () {
+        //console.log($(this).attr('src'));
+    if ($(this).not().attr('src') == "" || $(this).not().attr('src') == "undefined") {
+        
+        $(this).parent().parent().hide();
+        $(this).parent().parent().next('.detalles-pieza').addClass('w-100');
+    }
+    });
+
+//oculto en los carruseles de imagen los botones cuando sólo hay 1 imagen
+    $('.carousel-inner').each(function () {
+
+        var numItems = $(this).find('.carousel-item').length;
+        console.log(numItems);
+
+        if(numItems == '1') {
+            $(this).parent().find('.carousel-indicators').hide();
+            $(this).parent().find('.carousel-control-prev').hide();
+            $(this).parent().find('.carousel-control-next').hide();
+        }
+    });
+
+});
+
+
+
 $(document).ready(function() {
     // Asumeiendo una URL con esta estructura: http://url.com/?param1=value1&param2=value2 -->
     // Get the URL parameters
@@ -908,111 +942,123 @@ $(document).ready(function() {
     console.log(urlParams.has('param1')); // true
 
     if (urlParams.has('param1')) {
-        // eventos si hay parámetro
+    var idUrlsParam = param1Value.split('-')[0];
+    console.log("id param: "+idUrlsParam);
 
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $("#more-info").offset().top
-        }, 1000);
+        if (idUrlsParam == "pieza") {
+            // eventos si hay parámetro
 
-        $('.under-construction').hide();
-        //$('.ficha-pieza').hide();
-        $('.titulo-pieza-qr').hide();
-        $('.'+param1Value+' .mediaButton.audio .btn').click();
-        $('.journey-button').show('1000');
-        $('.filter').hide();
-        $('.filter.'+param1Value).show('1000');
-        //$('[data-filter="'+param1Value+'"]').click();
-        console.log('param1Value:', param1Value);
-            $(".navbar-nav").hide();
-            //$("#filter-piezas").hide();
-            $("#masthead").hide();
-            $("#header-portfolio").hide();
-            $("#about").hide();
-            $("#contact").hide();
-            $("#portfolio").addClass("mt-6");
-            $("#mainNav").addClass("dark");
-            $(".add").hide();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#more-info").offset().top
+            }, 1000);
 
-            var seccion = param1Value.split('-')[1];
-            console.log(seccion);
+            $('.under-construction').hide();
+            //$('.ficha-pieza').hide();
+            $('.titulo-pieza-qr').hide();
+            $('.'+param1Value+' .mediaButton.audio .btn').click();
+            $('.journey-button').show('1000');
+            $('.filter').hide();
+            $('.filter.'+param1Value).show('1000');
+            //$('[data-filter="'+param1Value+'"]').click();
+            console.log('param1Value:', param1Value);
+                $(".navbar-nav").hide();
+                //$("#filter-piezas").hide();
+                $("#masthead").hide();
+                $("#header-portfolio").hide();
+                $("#about").hide();
+                $("#contact").hide();
+                $("#portfolio").addClass("mt-6");
+                $("#mainNav").addClass("dark");
+                $(".add").hide();
 
-            console.log($.cookie('count'));
-            console.log($.cookie('events'));
-            console.log($.cookie('visita'));
+                var seccion = param1Value.split('-')[1];
+                console.log(seccion);
 
-
-// Añado la opción de ver toda la web si estás en la sección 8
-//            if(seccion == "s08") {
-//                var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
-//                $("#portfolio").append(restore);
-//            };
-
-            const event = new Date();
-            let time = event.toLocaleString();
-            console.log(time);
-
-            // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h:
-            
-            if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
-            let countValue = 1;
-
-            var start = new Date();
-            var end = new Date("14 Sep 2025");// Finaliza la exposición
-
-            // end - start returns difference in milliseconds 
-            var diff = new Date(end - start);
-
-            // get days
-            var days = parseInt(diff/1000/60/60/24);
-            console.log("Ahora :"+start);
-            console.log("Fin :"+end);
-            console.log("Dias :"+days);
-
-            $.cookie('events', '', {expires: days, secure: true});
-            $.cookie('count', countValue, {expires: days, secure: true});
-            $.cookie('visita', [], {expires: days, secure: true});
-   
-            let count = $.cookie('count');
-            let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
-            $(".bd-journey .modal-body .timeline-1").html(eventsValue);
-
-            let itinerario = ["vistia ("+count+"): "+time+" | "+param1Value];
-
-            //Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+                console.log($.cookie('count'));
+                console.log($.cookie('events'));
+                console.log($.cookie('visita'));
 
 
-            count = parseInt(count) + 1;
+    // Añado la opción de ver toda la web si estás en la sección 8
+                if(seccion == "s08") {
+                    var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+                    $("#portfolio").append(restore);
+                };
 
-            $.cookie('events', eventsValue);
-            $.cookie('count', count);
-            $.cookie('visita', [itinerario]);
-            console.log(itinerario);
-            console.log($.cookie('visita'));
+                const event = new Date();
+                let time = event.toLocaleString();
+                console.log(time);
+
+                // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h:
+                
+                if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
+                let countValue = 1;
+
+                var start = new Date();
+                var end = new Date("14 Sep 2025");// Finaliza la exposición
+
+                // end - start returns difference in milliseconds 
+                var diff = new Date(end - start);
+
+                // get days
+                var days = parseInt(diff/1000/60/60/24);
+                console.log("Ahora :"+start);
+                console.log("Fin :"+end);
+                console.log("Dias :"+days);
+
+                $.cookie('events', '', {expires: days, secure: true});
+                $.cookie('count', countValue, {expires: days, secure: true});
+                $.cookie('visita', [], {expires: days, secure: true});
+    
+                let count = $.cookie('count');
+                let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
+                $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+
+                let itinerario = ["vistia ("+count+"): "+time+" | "+param1Value];
+
+                //Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
+
+
+                count = parseInt(count) + 1;
+
+                $.cookie('events', eventsValue);
+                $.cookie('count', count);
+                $.cookie('visita', [itinerario]);
+                console.log(itinerario);
+                console.log($.cookie('visita'));
+                }
+
+                else {
+                console.log("camino 2: cookie ya creada");
+                let count = $.cookie('count');
+                let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
+                $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+
+                let itinerario = [$.cookie('visita')];
+
+                itinerario.push("vistia ("+count+"): "+time+" | "+param1Value);
+
+                count = parseInt(count) + 1;
+
+                $.cookie('events', eventsValue);
+                $.cookie('count', count);
+                $.cookie('visita', [itinerario]);
+                console.log(itinerario);
+                console.log($.cookie('visita'));
             }
-
-            else {
-            console.log("camino 2: cookie ya creada");
-            let count = $.cookie('count');
-            let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span style="display: inline;">'+param1Value+'</span></p></li>');
-            $(".bd-journey .modal-body .timeline-1").html(eventsValue);
-
-            let itinerario = [$.cookie('visita')];
-
-            itinerario.push("vistia ("+count+"): "+time+" | "+param1Value);
-
-            count = parseInt(count) + 1;
-
-            $.cookie('events', eventsValue);
-            $.cookie('count', count);
-            $.cookie('visita', [itinerario]);
-            console.log(itinerario);
-            console.log($.cookie('visita'));
+                
+                //console.log($.cookie('count'));
+                //console.log($.cookie('events'));
+                //console.log(itinerario);
         }
-            
-            //console.log($.cookie('count'));
-            //console.log($.cookie('events'));
-            //console.log(itinerario);
-    } 
+
+        else if (idUrlsParam == "pruebas") {
+        // parámetro para pruebas, cargo toda la web
+        };
+        
+    }
+
+
     else {
         $('.journey-button').hide();
         // Url sin params, elemino toda la exposicion
@@ -1050,7 +1096,6 @@ $(document).ready(function() {
 
     });
 });
-
 
 
 })
