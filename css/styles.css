@@ -964,6 +964,10 @@ progress {
 
 @media (min-width: 370px) {
 
+  .detalles-pieza {
+    padding-left: 0px;
+  }
+
   .portfolio-pieza .info-product .project-price,
   .portfolio-pieza .info-product .project-add
   {
@@ -1165,6 +1169,7 @@ progress {
   }
 }
 @media (min-width: 768px) {
+
   .col-md {
     flex: 1 0 0%;
   }
@@ -1334,6 +1339,10 @@ progress {
   }
 }
 @media (min-width: 992px) {
+  .detalles-pieza {
+    padding-left: 20px;
+  }
+
   .col-lg {
     flex: 1 0 0%;
   }
@@ -11193,7 +11202,7 @@ header.masthead h1, header.masthead .h1 {
 
 .img-main {
   width: 100%!important;
-  height: 400px!important;
+  aspect-ratio: 1 / 1;
   object-fit: cover!important;
 }
 
@@ -11598,13 +11607,17 @@ button.add {
     /* background-color:transparent; */
   transition: 0.5s;
   color:#adadad;
+  height:50px!important;
 }
-
-
 
 button.add.active {
   color:#626262;
 }
+
+#filter-secciones .btn::first-letter {
+  text-transform: uppercase;
+}
+
 
 #tittle-cart-items{
   text-align:center;
