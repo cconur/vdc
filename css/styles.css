@@ -964,8 +964,8 @@ progress {
 
 @media (min-width: 370px) {
 
-  .detalles-pieza {
-    padding-left: 0px;
+  .imagen-pieza {
+    padding-right: 0px; 
   }
 
   .portfolio-pieza .info-product .project-price,
@@ -1169,6 +1169,9 @@ progress {
   }
 }
 @media (min-width: 768px) {
+  .imagen-pieza {
+    padding-right: 20px; 
+  }
 
   .col-md {
     flex: 1 0 0%;
@@ -1339,9 +1342,6 @@ progress {
   }
 }
 @media (min-width: 992px) {
-  .detalles-pieza {
-    padding-left: 20px;
-  }
 
   .col-lg {
     flex: 1 0 0%;
