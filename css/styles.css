@@ -11931,6 +11931,12 @@ html.glightbox-open {
   }
 }
 
+.event span {
+  background-color: white;
+  padding: 2px 15px 2px 5px;
+  border-radius: 15px;
+}
+
 .rotated {
   transform: rotate(90deg); /* Equal to rotateZ(90deg) */
   transition: 0.5s;
