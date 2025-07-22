@@ -4,7 +4,6 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
-
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -1102,27 +1101,55 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
-//obtengo 
-var piezas = [];
-    $('.timeline-1').each(function () {
-        
-        var pieza = $(this).find('.pieza-visitada').text();
-        console.log(pieza);
-        piezas.push(pieza)
+        //obtengo las piezas con visitas repetidas en el itinerario
 
-    });
-    console.log('todas las piezas: '+piezas);
-    var piezasUnicas = jQuery.unique( piezas );
-    console.log('piezas unicas: '+piezasUnicas);
+        var piezas = [];
 
-    var countPiezas = {};
-    for (var z = 0; z < piezas.length; z++) {
-        countPiezas[piezas[z]] = 1 + (countPiezas[piezas[z]] || 0);
-    }
-    console.log(countPiezas);
+        $('.timeline-1 .pieza-visitada').each(function () {
+            var pieza = $(this).text();
+            piezas.push(pieza);
+        });
 
+        console.log(piezas);
 
+        var unique = piezas.filter(function(itm, i, piezas) {
+            return i == piezas.indexOf(itm);
+        });
 
+        console.log(unique);
+
+        var countPiezas = {};
+        for (var z = 0; z < piezas.length; z++) {
+            countPiezas[piezas[z]] = 1 + (countPiezas[piezas[z]] || 0);
+        }
+        console.log(countPiezas);
+
+        function getKey(countPiezas){
+        const arr = [],
+        obj = Object.keys(countPiezas);
+        for (var x in obj){
+            if(countPiezas[obj[x]] > 1){
+            arr.push(obj[x]);
+            }
+        }
+        return arr;
+        }
+
+        var piezasRepetidas = getKey(countPiezas);
+
+        console.log(piezasRepetidas);
+
+        piezasRepetidas.forEach(function (item) {
+            //console.log(item);
+            $('.timeline-1 .pieza-visitada').each(function () {
+                
+                var piezaRep = $(this).text();
+                //console.log(piezaRep+" "+item);
+                if(piezaRep == item) {$(this).append('<span><i class="bi bi-repeat ms-2"></i></span>');}
+
+            });
+
+        });
 
 });
 
