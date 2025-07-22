@@ -1146,7 +1146,7 @@ $(document).ready(function(){
                 var piezaRep = $(this).text();
                 //console.log(piezaRep+" >> "+item);
                 if(piezaRep == item) {
-                    $(this).append('<span><i class="bi bi-repeat ms-2"></i>Visita repetida</span>');
+                    $(this).append('<span><i class="fa-solid fa-repeat mx-2"></i></i>Visita repetida</span>');
                     $(this).css("background-color", "orange");
                 }
             });
