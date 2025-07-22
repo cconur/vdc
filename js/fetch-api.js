@@ -1144,9 +1144,11 @@ $(document).ready(function(){
             $('.timeline-1 .pieza-visitada').each(function () {
                 
                 var piezaRep = $(this).text();
-                //console.log(piezaRep+" "+item);
-                if(piezaRep == item) {$(this).append('<span><i class="bi bi-repeat ms-2"></i></span>');}
-
+                //console.log(piezaRep+" >> "+item);
+                if(piezaRep == item) {
+                    $(this).append('<span><i class="bi bi-repeat ms-2"></i>Visita repetida</span>');
+                    $(this).css("background-color", "orange");
+                }
             });
 
         });
