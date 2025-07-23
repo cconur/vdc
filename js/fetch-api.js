@@ -685,7 +685,7 @@ $(document).ready(function(){
         // Por alguna razón, por el hecho de llamar al widget de traducción de Google, hay veces que manda a traducir aunque el idioma sea el por defecto. Esto lo revierte:
         console.log('Camino de idioma por defecto: '+userLangCode);
         $('#page-top').addClass('notranslate');
-        //$('#:1.container button#:1.restore').click();
+        $('#:1.container button#:1.restore').click();
     }
     else {
         // Traduzco toda la web segun el índice del idioma detectado modificando el select del widget del traductor, excepto para el idioma original (es)
