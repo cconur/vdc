@@ -11389,6 +11389,11 @@ button[data-filter="all"]{
   border-radius: 15px;
 }
 
+.cart span {
+  display:none;
+}
+
+
 .event p span {
   background-color:#4b7beb;
 }
