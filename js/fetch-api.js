@@ -674,15 +674,21 @@ $(document).ready(function(){
     else if (userLangCode == "gl") {userLangCodeFlag = "es-ga"}
     else {userLangCodeFlag = userLangCode};
     
-    let detLang = '<span class="ms-2 current-language fi fi-'+userLangCodeFlag+'"></span>';
+    let detLang = '<span class="current-language fi fi-'+userLangCodeFlag+'"></span>';
     $("#navbarResponsive").append(detLang);
 
     // Modifico el widget de google transtale; 
     $('.goog-te-gadget div').get(0).nextSibling.remove();
     $('.goog-te-gadget').find('span').hide();
 
-    // Traduzco toda la web segun el índice del idioma detectado modificando el select del widget del traductor, excepto para el idioma original (es)
-    if (userLangCode !== "es") {
+    if (userLangCode == "es") {
+        // Por alguna razón, por el hecho de llamar al widget de traducción de Google, hay veces que manda a traducir aunque el idioma sea el por defecto. Esto lo revierte:
+        console.log('Camino de idioma por defecto: '+userLangCode);
+        $('#page-top').addClass('notranslate');
+        //$('#:1.container button#:1.restore').click();
+    }
+    else {
+        // Traduzco toda la web segun el índice del idioma detectado modificando el select del widget del traductor, excepto para el idioma original (es)
         console.log('Se procesa la traducción. Idioma distinto al original (es): '+userLangCode);
 
         // Busco el indice del idioma detectado en el widget de google translate
@@ -697,7 +703,6 @@ $(document).ready(function(){
             a.selectedIndex = index;
             a.dispatchEvent(new Event('change'));
         }
-
         updateLanguage(userLangCode);
     }
 
