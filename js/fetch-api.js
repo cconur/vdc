@@ -4,6 +4,7 @@ const infoVirgen = document.getElementById("about");
 //API securizada vdc
 const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
+
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
 const sheet = "piezas";
 
@@ -22,7 +23,7 @@ const myRequest = new Request("https://sheets.googleapis.com/v4/spreadsheets/"+g
 // Detecto y cambio idioma
 var userLang = navigator.language || navigator.userLanguage;
 
-//userLang = "eu-EU"; 
+//userLang = "de-DE"; 
 
 console.log('user lang:', userLang);
 
@@ -680,16 +681,14 @@ $(document).ready(function(){
     $('.goog-te-gadget div').get(0).nextSibling.remove();
     $('.goog-te-gadget').find('span').hide();
 
-    // Traduzco toda la web segun el idioma detectado; 
-    console.log('user lang code:', userLangCode);
-
-    // Busco el indice del idioma detectado en el widget de google translate
-    let index = $(".goog-te-combo option[value="+userLangCode+"]").index();
-    console.log('Index: '+index);
-
     // Traduzco toda la web segun el índice del idioma detectado modificando el select del widget del traductor, excepto para el idioma original (es)
     if (userLangCode !== "es") {
         console.log('Se procesa la traducción. Idioma distinto al original (es): '+userLangCode);
+
+        // Busco el indice del idioma detectado en el widget de google translate
+        let index = $(".goog-te-combo option[value="+userLangCode+"]").index();
+        console.log('Index: '+index);
+
         function updateLanguage(value) {
             //var selectedIndex = 0;
             var a = document.querySelector(".goog-te-combo");
@@ -701,7 +700,6 @@ $(document).ready(function(){
 
         updateLanguage(userLangCode);
     }
-    
 
         
 });
@@ -961,22 +959,24 @@ $(document).ready(function() {
             $('.filter.'+param1Value).show('1000');
             //$('[data-filter="'+param1Value+'"]').click();
             console.log('param1Value:', param1Value);
-                $(".navbar-nav").hide();
-                //$("#filter-piezas").hide();
-                $("#masthead").hide();
-                $("#header-portfolio").hide();
-                $("#about").hide();
-                $("#contact").hide();
-                $("#portfolio").addClass("mt-6");
-                $("#mainNav").addClass("dark");
-                $(".add").hide();
+            $(".navbar-nav").hide();
+            $(".navbar-nav").addClass("flex-row-reverse");
+            $(".current-language").removeClass("ms-2");
+            //$("#filter-piezas").hide();
+            $("#masthead").hide();
+            $("#header-portfolio").hide();
+            $("#about").hide();
+            $("#contact").hide();
+            $("#portfolio").addClass("mt-6");
+            $("#mainNav").addClass("dark");
+            $(".add").hide();
 
-                var seccion = param1Value.split('-')[1];
-                console.log(seccion);
+            var seccion = param1Value.split('-')[1];
+            console.log(seccion);
 
-                console.log($.cookie('count'));
-                console.log($.cookie('events'));
-                console.log($.cookie('visita'));
+            console.log($.cookie('count'));
+            console.log($.cookie('events'));
+            console.log($.cookie('visita'));
 
 
     // Añado la opción de ver toda la web si estás en la sección 8
@@ -1075,6 +1075,8 @@ $(document).ready(function() {
         //$('.titulo-pieza-qr').hide();
         $('.mediaButton.audio .btn').click();
         $('.ficha-pieza').show();
+        $(".navbar-nav").removeClass("flex-row-reverse");
+        $(".current-language").addClass("ms-2");
         $('.filter').show();
         $(".navbar-nav").show();
         //$("#filter-piezas").hide();
@@ -1144,11 +1146,12 @@ $(document).ready(function(){
             $('.timeline-1 .pieza-visitada').each(function () {
                 
                 var piezaRep = $(this).text();
-                //console.log(piezaRep+" >> "+item);
+                //console.log(piezaRep+" "+item);
                 if(piezaRep == item) {
-                    $(this).parent().parent().append('<span><i class="fa-solid fa-repeat mx-2"></i></i>Visita repetida</span>');
+                    $(this).parent().parent().append('<span><i class="bi bi-repeat me-2"></i>Visita repetida</span>');
                     $(this).css("background-color", "orange");
                 }
+
             });
 
         });
