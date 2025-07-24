@@ -64,6 +64,9 @@ fetch(myRequest)
         //replace special characters
         const chars = {
           ' ': '-',
+          '(': '',
+          ')': '',
+          '/': '-',
           '.': '-',
           ',': '-',
           ';': '-',
