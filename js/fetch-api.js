@@ -944,11 +944,6 @@ $(document).ready(function() {
     const param1Value = urlParams.get('param1');
     // const param2Value = urlParams.get('param2');
 
-// Reseteo las cookies
-//$.removeCookie('events');
-//$.removeCookie('count');
-//$.removeCookie('visita');
-
 
     console.log(urlParams.has('param1')); // true
 
@@ -973,7 +968,7 @@ $(document).ready(function() {
             //$('[data-filter="'+param1Value+'"]').click();
             console.log('param1Value:', param1Value);
             $(".navbar-nav").hide();
-            $(".navbar-nav").addClass("flex-row-reverse");
+            $(".navbar-collapse").addClass("flex-row-reverse");
             $(".current-language").removeClass("ms-2");
             //$("#filter-piezas").hide();
             $("#masthead").hide();
@@ -991,8 +986,10 @@ $(document).ready(function() {
             console.log($.cookie('events'));
             console.log($.cookie('visita'));
 
+            let countValue = 1;
+            let itinerario = [];
 
-    // Añado la opción de ver toda la web si estás en la sección 8
+                // Añado la opción de ver toda la web si estás en la sección 8
                 if(seccion == "s08") {
                     var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
                     $("#portfolio").append(restore);
@@ -1004,11 +1001,12 @@ $(document).ready(function() {
 
                 // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h:
                 
-                if ($.cookie('count') == undefined || $.cookie('events') == undefined) {
-                let countValue = 1;
+                if ($.cookie('count') == undefined || $.cookie('itinerario') == undefined) {
+                console.log("camino 1: cookie NO creada");
 
                 var start = new Date();
-                var end = new Date("14 Sep 2025");// Finaliza la exposición
+                // Finaliza la exposición
+                var end = new Date("14 Sep 2025");
 
                 // end - start returns difference in milliseconds 
                 var diff = new Date(end - start);
@@ -1019,66 +1017,74 @@ $(document).ready(function() {
                 console.log("Fin :"+end);
                 console.log("Dias :"+days);
 
-                $.cookie('events', '', {expires: days, secure: true});
-                $.cookie('count', countValue, {expires: days, secure: true});
-                $.cookie('visita', [], {expires: days, secure: true});
+                $.cookie('count', countValue, {expires: days, path: '/' });
+                $.cookie('itinerario', [], {expires: days, path: '/' });
     
                 let count = $.cookie('count');
-                let eventsValue = String('<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">'+param1Value+'</span></p></li>');
-                $(".bd-journey .modal-body .timeline-1").html(eventsValue);
 
-                let itinerario = ["vistia ("+count+"): "+time+" | "+param1Value];
-
-                //Object.assign(itinerario, { visita: { id: count, hora:  time, pieza: param1Value} });
-
+                itinerario.push({id : count, hora:  time, pieza: param1Value});
 
                 count = parseInt(count) + 1;
 
-                $.cookie('events', eventsValue);
                 $.cookie('count', count);
                 $.cookie('visita', [itinerario]);
                 console.log(itinerario);
-                console.log($.cookie('visita'));
+                let visita = itinerario.filter(visita => visita.id == "2");
+                console.log(visita);
+                console.log($.cookie('itinerario'));
                 }
 
                 else {
                 console.log("camino 2: cookie ya creada");
                 let count = $.cookie('count');
-                let eventsValue = String($.cookie('events') + '<li class="event" data-date="'+time+'"><h4 class="mb-3">Parada número:<span style="display: inline;">'+count+'</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">'+param1Value+'</span></p></li>');
-                $(".bd-journey .modal-body .timeline-1").html(eventsValue);
+                itinerario = [$.cookie('itinerario')];
 
-                let itinerario = [$.cookie('visita')];
-
-                itinerario.push("vistia ("+count+"): "+time+" | "+param1Value);
+                itinerario.push({id : count, hora:  time, pieza: param1Value});
 
                 count = parseInt(count) + 1;
 
-                $.cookie('events', eventsValue);
                 $.cookie('count', count);
                 $.cookie('visita', [itinerario]);
                 console.log(itinerario);
-                console.log($.cookie('visita'));
+                console.log($.cookie('itinerario'));
             }
-                
+        const myItinerary = document.getElementById("timeline");
+
+        itinerario.forEach(visita => {
+
+        var newVisit = document.createElement('li');
+        newVisit.className = "event";
+        newVisit.setAttribute('data-date', visita.hora);
+        newVisit.innerHTML = `
+            <h4 class="mb-3">Parada número:<span style="display: inline;">${visita.id}</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">${visita.pieza}</span></p>
+            `;
+            myItinerary.appendChild(newVisit);
+        });
                 //console.log($.cookie('count'));
                 //console.log($.cookie('events'));
                 //console.log(itinerario);
         }
 
-        else if (idUrlsParam == "pruebas") {
-            console.log("ok");
+        //else if (idUrlsParam == "pruebas") {
+        //    console.log("ok");
+        //    $('.journey-button').hide();
         // parámetro para pruebas, cargo toda la web
+        //}
+
+        else if (idUrlsParam == "reset") {
+            console.log("Borro cookies");
+            // Reseteo las cookies
+            $.removeCookie('count');
+            $.removeCookie('itinerario');
         }
 
-        else {$("#portfolio").remove();}
-        
     }
-
-
+    
     else {
+        console.log("Cargo TODA la web normalmente");
         $('.journey-button').hide();
         // Url sin params, elemino toda la exposicion
-        $("#portfolio").remove();
+        //$("#portfolio").remove();
 
     }
 
@@ -1088,7 +1094,7 @@ $(document).ready(function() {
         //$('.titulo-pieza-qr').hide();
         $('.mediaButton.audio .btn').click();
         $('.ficha-pieza').show();
-        $(".navbar-nav").removeClass("flex-row-reverse");
+        $(".navbar-collapse").removeClass("flex-row-reverse");
         $(".current-language").addClass("ms-2");
         $('.filter').show();
         $(".navbar-nav").show();
@@ -1170,8 +1176,6 @@ $(document).ready(function(){
         });
 
 });
-
-
 
 
 
