@@ -989,7 +989,7 @@ $(document).ready(function() {
             console.log(seccion);
 
             console.log($.cookie('count'));
-            console.log($.cookie('itinerario'));
+            console.log([$.cookie('itinerario')]);
 
             let countValue = 1;
             let itinerario = [];
@@ -1027,9 +1027,10 @@ $(document).ready(function() {
                 console.log("Dias :"+days);
 
                 $.cookie('count', countValue, {expires: days, path: '/' });
-                $.cookie('itinerario', [], {expires: days, path: '/' });
+                $.cookie('itinerario', [itinerario], {expires: days, path: '/' });
     
                 let count = $.cookie('count');
+                console.log(itinerario);
 
                 itinerario.push({id : count, hora:  time, pieza: param1Value});
 
@@ -1038,8 +1039,8 @@ $(document).ready(function() {
                 $.cookie('count', count);
                 $.cookie('itinerario', [itinerario]);
                 console.log(itinerario);
-                    let visita = itinerario.filter(visita => visita.id == "2");
-                    console.log(visita);
+                //    let visita = itinerario.filter(visita => visita.id == "2");
+                //    console.log(visita);
                 console.log($.cookie('itinerario'));
                 }
 
