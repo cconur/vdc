@@ -1027,7 +1027,7 @@ $(document).ready(function() {
                 console.log("Dias :"+days);
 
                 $.cookie('count', countValue, {expires: days, path: '/' });
-                $.cookie('itinerario', itinerario, {expires: days, path: '/' });
+                $.cookie('itinerario', [], {expires: days, path: '/' });
     
                 let count = $.cookie('count');
 
@@ -1036,7 +1036,7 @@ $(document).ready(function() {
                 count = parseInt(count) + 1;
 
                 $.cookie('count', count);
-                $.cookie('itinerario', itinerario);
+                $.cookie('itinerario', [itinerario]);
                 console.log(itinerario);
                     let visita = itinerario.filter(visita => visita.id == "2");
                     console.log(visita);
@@ -1047,7 +1047,7 @@ $(document).ready(function() {
                 console.log("camino 2: cookie ya creada");
                 let count = $.cookie('count');
                 console.log(itinerario);
-                itinerario = $.cookie('itinerario');
+                itinerario = [$.cookie('itinerario')];
                 console.log(itinerario);
 
                 itinerario.push({id : count, hora:  time, pieza: param1Value});
@@ -1055,7 +1055,7 @@ $(document).ready(function() {
                 count = parseInt(count) + 1;
 
                 $.cookie('count', count);
-                $.cookie('itinerario', itinerario);
+                $.cookie('itinerario', [itinerario]);
                 console.log(itinerario);
                 console.log($.cookie('itinerario'));
             }
