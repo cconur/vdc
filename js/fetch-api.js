@@ -1,8 +1,14 @@
 const head = document.getElementById("masthead");
 const infoVirgen = document.getElementById("about");
 
+//API pruebas vdc
+//const apiKey = "AIzaSyAHboM6ymynP11uObDSMrJM6wQugHw4BbM";
+
+//API pruebas ldf
+const apiKey = "AIzaSyAsVQie8btmRLZnGeJEKikmjE73MDL6450";
+
 //API securizada vdc
-const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
+//const apiKey = "AIzaSyBebPnb4qO1TaBM6grBRpPjEZ05qp-bx2Q";
 
 
 const gSheetsFile = "1GDHFDwf5Nl-RiBCUODI14ZxLGlXU35NeA17akuFxIts";
@@ -990,10 +996,14 @@ $(document).ready(function() {
             let itinerario = [];
 
                 // Añado la opción de ver toda la web si estás en la sección 8
-                if(seccion == "s08") {
-                    var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
-                    $("#portfolio").append(restore);
-                }
+                //if(seccion == "s08") {
+                //    var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+                //    $("#portfolio").append(restore);
+                //}
+
+                // Añado la opción de ver toda la web
+                var restore = String('<div class="container px-3 mt-0 restoreDiv"><div class="col text-center"><i class="mb-3 fa-solid fa-bounce fa-lg fa-angles-down"></i><div class="wrap"><button class="btn w-50 backToMain"><i class="fa-solid fa-house me-2"></i>Ir a la web de la exposición</button></div></div></div>');
+                $("#portfolio").append(restore);
 
                 const event = new Date();
                 let time = event.toLocaleString();
@@ -1018,7 +1028,7 @@ $(document).ready(function() {
                 console.log("Dias :"+days);
 
                 $.cookie('count', countValue, {expires: days, path: '/' });
-                $.cookie('itinerario', [], {expires: days, path: '/' });
+                $.cookie('itinerario', itinerario, {expires: days, path: '/' });
     
                 let count = $.cookie('count');
 
@@ -1027,7 +1037,7 @@ $(document).ready(function() {
                 count = parseInt(count) + 1;
 
                 $.cookie('count', count);
-                $.cookie('visita', [itinerario]);
+                $.cookie('itinerario', [itinerario]);
                 console.log(itinerario);
                 let visita = itinerario.filter(visita => visita.id == "2");
                 console.log(visita);
@@ -1048,6 +1058,7 @@ $(document).ready(function() {
                 console.log(itinerario);
                 console.log($.cookie('itinerario'));
             }
+
         const myItinerary = document.getElementById("timeline");
 
         itinerario.forEach(visita => {
@@ -1176,6 +1187,8 @@ $(document).ready(function(){
         });
 
 });
+
+
 
 
 
