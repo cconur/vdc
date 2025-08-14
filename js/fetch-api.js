@@ -991,8 +991,6 @@ $(document).ready(function() {
             console.log($.cookie('count'));
             console.log([$.cookie('itinerario')]);
 
-            let countValue = 1;
-            let itinerario = [];
 
                 // Añado la opción de ver toda la web si estás en la sección 8
                 //if(seccion == "s08") {
@@ -1009,6 +1007,8 @@ $(document).ready(function() {
                 console.log(time);
 
                 // Variable como cookie, empiezo en 1 por sesión, cada sesión son 24h:
+                let countValue = 1;
+                let itinerario = [];
                 
                 if ($.cookie('count') == undefined || $.cookie('itinerario') == undefined) {
                 console.log("camino 1: cookie NO creada");
@@ -1016,10 +1016,8 @@ $(document).ready(function() {
                 var start = new Date();
                 // Finaliza la exposición
                 var end = new Date("14 Sep 2025");
-
                 // end - start returns difference in milliseconds 
                 var diff = new Date(end - start);
-
                 // get days
                 var days = parseInt(diff/1000/60/60/24);
                 console.log("Ahora :"+start);
