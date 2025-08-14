@@ -1035,7 +1035,7 @@ $(document).ready(function() {
                 count = parseInt(count) + 1;
 
                 $.cookie('count', count);
-                $.cookie('itinerario', [itinerario]);
+                $.cookie('itinerario', itinerario);
                 console.log(itinerario);
                 //    let visita = itinerario.filter(visita => visita.id == "2");
                 //    console.log(visita);
