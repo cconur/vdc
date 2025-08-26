@@ -11198,7 +11198,7 @@ header.masthead h1, header.masthead .h1 {
 .row.mediaContent {
   border-radius: 20px;
   padding:10px !important;
-  margin-bottom:5px!important;
+  margin-bottom:15px!important;
   background-color: #eeeff2;
 }
 
@@ -11389,10 +11389,10 @@ button[data-filter="all"]{
 .event p span,
 .cart span {
   color: white;
-  padding: 2px 7px;
+  padding: 2px 10px;
   margin-left:5px;
   text-align:center;
-  border-radius: 15px;
+  border-radius: 25px;
 }
 
 .cart span {
@@ -11944,7 +11944,7 @@ html.glightbox-open {
 
 .event span {
   background-color: white;
-  padding: 2px 15px 2px 5px;
+  padding: 2px 5px 2px 5px;
   border-radius: 15px;
 }
 
