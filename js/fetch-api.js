@@ -1067,7 +1067,7 @@ $(document).ready(function() {
         newVisit.className = "event";
         newVisit.setAttribute('data-date', visita.hora);
         newVisit.innerHTML = `
-            <h4 class="mb-3">Parada número:<span style="display: inline;">${visita.id}</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">${visita.pieza}</span></p>
+            <h4 class="mb-3">Parada:<span style="display: inline;">${visita.id}</span></h4><p>Pieza visitada:<span class="pieza-visitada" style="display: inline;">${visita.pieza}</span></p>
             `;
             myItinerary.appendChild(newVisit);
         });
@@ -1178,7 +1178,7 @@ $(document).ready(function(){
                 var piezaRep = $(this).text();
                 //console.log(piezaRep+" "+item);
                 if(piezaRep == item) {
-                    $(this).parent().parent().append('<span><i class="bi bi-repeat me-2"></i>Visita repetida</span>');
+                    $(this).parent().parent().append('<span><i class="bi bi-repeat mx-2"></i>Visita repetida</span>');
                     $(this).css("background-color", "orange");
                 }
 
