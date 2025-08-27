@@ -1178,7 +1178,7 @@ $(document).ready(function(){
                 var piezaRep = $(this).text();
                 //console.log(piezaRep+" "+item);
                 if(piezaRep == item) {
-                    $(this).parent().parent().append('<span><i class="bi bi-repeat mx-2"></i>Visita repetida</span>'+'<span>'+countPiezas+' veces</span>');
+                    $(this).parent().parent().append('<span><i class="bi bi-repeat mx-2"></i>Visita repetida</span>'+'<span>'+countPiezas+'<i>veces</i></span>');
                     $(this).css("background-color", "orange");
                 }
 
