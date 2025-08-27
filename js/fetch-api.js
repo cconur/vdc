@@ -1168,6 +1168,7 @@ $(document).ready(function(){
         }
 
         var piezasRepetidas = getKey(countPiezas);
+        var NpiezasRepetidas = getValue(countPiezas);
 
         console.log(piezasRepetidas);
 
@@ -1178,7 +1179,7 @@ $(document).ready(function(){
                 var piezaRep = $(this).text();
                 //console.log(piezaRep+" "+item);
                 if(piezaRep == item) {
-                    $(this).parent().parent().append('<span><i class="bi bi-repeat mx-2"></i>Visita repetida</span>'+'<span>'+countPiezas+'<i>veces</i></span>');
+                    $(this).parent().parent().append('<span><i class="bi bi-repeat mx-2"></i>Visita repetida</span><i>'+NpiezasRepetidas+'</i> veces</span>');
                     $(this).css("background-color", "orange");
                 }
 
